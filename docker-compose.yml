@@ -10,6 +10,7 @@ services:
 #  █       █         █  █ █  ▀      ▀███▀   █  █ █ ███▀
 #   ▀     ▀          █   ██                 █   ██
 
+  # Front-end Angular JavaScript single page application
   frontend:
     image: nginx:1.13
     # Mount the frontend subdirectory of this project into /var/www in the container running Nginx
@@ -48,15 +49,14 @@ services:
 
   # Back-end PHP REST API application
   backend:
-    image: php:7.1-apache
+    image: richarvey/nginx-php-fpm:1.2.1
     # Mount the backend subdirectory of this project into /var/www in the container running Apache and mod-php
     volumes:
-#        - ./backend:/var/backend
-         - ./backend/web:/var/www/html
-    # Overwrite the default Apache configuration (shortcut to avoid building a pre-configured image)
-#    configs:
-#        - source: backend-apache
-#          target: /etc/apache2/sites-available/000-default.conf
+        - ./backend:/var/backend
+    # Overwrite the default Nginx configuration (shortcut to avoid building a pre-configured image)
+    configs:
+        - source: backend-nginx
+          target: /etc/nginx/sites-available/default.conf
     deploy:
       replicas: 1
       resources:
@@ -107,5 +107,5 @@ networks:
 configs:
   frontend-nginx:
     file: ./configuration/frontend-nginx.conf
-  backend-apache:
-    file: ./configuration/backend-apache.conf
+  backend-nginx:
+    file: ./configuration/backend-nginx.conf
