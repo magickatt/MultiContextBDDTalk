@@ -1,5 +1,17 @@
 {
     "require": {
         "silex/silex": "~2.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^3.4",
+        "behat/behat": "^3.3"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": {
+            "HistoricalMeteorological\\": "src/HistoricalMeteorological"
+        }
     }
 }
