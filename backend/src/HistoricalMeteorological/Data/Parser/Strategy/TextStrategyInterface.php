@@ -9,5 +9,5 @@ interface TextStrategyInterface
      * @param string $text
      * @return array
      */
-    public function parseTextIntoArray($text);
+    public function parseTextIntoArray(string $text):array;
 }

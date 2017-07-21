@@ -12,7 +12,7 @@ class FileLoader implements LoaderInterface
     /**
      * @param string $filename
      */
-    public function __construct($filename)
+    public function __construct(string $filename)
     {
         $this->filename = $filename;
     }
@@ -21,7 +21,7 @@ class FileLoader implements LoaderInterface
      * Get rows from local file resource
      * @return Generator
      */
-    public function getRows()
+    public function getRows():Generator
     {
         $file = fopen($this->filename, 'r');
         while (($line = fgets($file)) !== false) {

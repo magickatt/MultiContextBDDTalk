@@ -35,7 +35,7 @@ services:
         constraints: [node.role == manager]
     # Forward port 80 (HTTP default) to port 80 in the containers
     ports:
-      - "80:80"
+      - "8888:80"
     networks:
       - default
 
@@ -73,33 +73,9 @@ services:
     # therefore the Angular application will talk to the REST API using port 9080 in this demonstration. This is only
     # required in this case because we are re-using localhost to serve both applications.
     ports:
-      - "9080:80"
+      - "9999:80"
     networks:
       - default
-
-# ██▄   ██     ▄▄▄▄▀ ██   ███   ██      ▄▄▄▄▄   ▄███▄
-# █  █  █ █ ▀▀▀ █    █ █  █  █  █ █    █     ▀▄ █▀   ▀
-# █   █ █▄▄█    █    █▄▄█ █ ▀ ▄ █▄▄█ ▄  ▀▀▀▀▄   ██▄▄
-# █  █  █  █   █     █  █ █  ▄▀ █  █  ▀▄▄▄▄▀    █▄   ▄▀
-# ███▀     █  ▀         █ ███      █            ▀███▀
-#         █            █          █
-#        ▀            ▀          ▀
-
-#  database:
-#    # replace username/repo:tag with your name and image details
-#    image: mysql:5.5
-#    deploy:
-#      #replicas: 1
-#      resources:
-#        limits:
-#          cpus: "0.1"
-#          memory: 256M
-#      restart_policy:
-#        condition: on-failure
-#    ports:
-#      - "33306:3306"
-#    networks:
-#      - webnet
 
 networks:
   default:

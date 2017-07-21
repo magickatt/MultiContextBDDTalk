@@ -1,6 +1,8 @@
 {
     "require": {
-        "silex/silex": "~2.0"
+        "silex/silex": "~2.0",
+        "doctrine/orm": "^2.5",
+        "dflydev/doctrine-orm-service-provider": "^2.0"
     },
     "require-dev": {
         "phpspec/phpspec": "^3.4",

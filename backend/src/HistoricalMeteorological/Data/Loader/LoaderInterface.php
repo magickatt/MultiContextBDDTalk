@@ -10,5 +10,5 @@ interface LoaderInterface
      * Get rows from somewhere
      * @return Generator
      */
-    public function getRows();
+    public function getRows():Generator;
 }

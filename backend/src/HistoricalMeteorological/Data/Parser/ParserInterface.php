@@ -10,5 +10,5 @@ interface ParserInterface
      * Get entry for each row
      * @return Generator
      */
-    public function getEntries();
+    public function getEntries():Generator;
 }

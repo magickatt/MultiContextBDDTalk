@@ -28,7 +28,7 @@ class TextParser implements ParserInterface
      * Get entry for each row
      * @return Generator
      */
-    public function getEntries()
+    public function getEntries():Generator
     {
         foreach ($this->rows as $row) {
             yield $this->textParsingStrategy->parseTextIntoArray($row);
