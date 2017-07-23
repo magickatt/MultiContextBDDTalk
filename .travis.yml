@@ -8,5 +8,5 @@ install:
 services:
   - docker
 script:
-  - cd backend && bin/phpspec && cd -
+  - cd backend && bin/phpspec run && cd -
   - cd backend && bin/phpunit && cd -

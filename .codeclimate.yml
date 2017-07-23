@@ -4,10 +4,10 @@ engines:
     config:
       standard: "PSR1,PSR2"
   phpmd:
-    enabled: true
-    config:
-      file_extensions:
-      - php
+      enabled: true
+      config:
+        file_extensions:
+        - php
   duplication:
     enabled: true
     config:
@@ -19,6 +19,8 @@ ratings:
   - "backend/src/**.php"
 exclude_paths:
 - "frontend/**/*"
-- "backend/**/*"
-- "!backend/src/**/*"
-- database
+- "**/bin/**/*"
+- "**/data/**/*"
+- "**/spec/**/*"
+- "**/tests/**/*"
+- "**/vendor/**/*"
