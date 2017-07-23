@@ -1,6 +1,9 @@
 # Multi-context BDD Talk
 
 ![Travis CI build status](https://www.travis-ci.org/magickatt/MultiContextBDDTalk.svg?branch=master)
+[![Code Climate](https://codeclimate.com/github/magickatt/MultiContextBDDTalk/badges/gpa.svg)](https://codeclimate.com/github/magickatt/MultiContextBDDTalk)
+[![Test Coverage](https://codeclimate.com/github/magickatt/MultiContextBDDTalk/badges/coverage.svg)](https://codeclimate.com/github/magickatt/MultiContextBDDTalk/coverage)
+[![Issue Count](https://codeclimate.com/github/magickatt/MultiContextBDDTalk/badges/issue_count.svg)](https://codeclimate.com/github/magickatt/MultiContextBDDTalk)
 
 Demo for talk on how [Behaviour Driven Development](https://en.wikipedia.org/wiki/Behavior-driven_development) (BDD) can be used to test multiple contexts for modern websites separated into [single page applications](https://en.wikipedia.org/wiki/Single-page_application) and [REST APIs](https://en.wikipedia.org/wiki/Application_programming_interface#Web_APIs)
 

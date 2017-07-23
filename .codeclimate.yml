@@ -20,6 +20,7 @@ ratings:
 exclude_paths:
 - "frontend/**/*"
 - "backend/web/*"
+- "backend/composer.lock"
 - "**/bin/**/*"
 - "**/data/**/*"
 - "**/spec/**/*"
