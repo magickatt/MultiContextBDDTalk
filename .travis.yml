@@ -38,7 +38,8 @@ script:
   - cd backend && bin/phpcov merge data/coverage --clover ../clover.xml && cd -
 
   # Run behavioural tests
-  - cd backend && bin/behat && cd -
+  - chmod +x ./bdd-tests.sh
+  - ./bdd-tests.sh
 
   # Send test coverage to Code Climate
   - ./cc-test-reporter after-build --coverage-input-type clover --exit-code $TRAVIS_TEST_RESULT --id 93d5a5771445034604e4018774f4a338fca8492af5167b4d266f0b9fb53f2707
