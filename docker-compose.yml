@@ -13,13 +13,13 @@ services:
   # Front-end Angular JavaScript single page application
   frontend:
     image: nginx:1.13
-    # Mount the frontend subdirectory of this project into /var/www in the container running Nginx
+    # Mount the frontend subdirectory of this project into /var/frontend in the container running Nginx
     volumes:
-        - ./frontend:/var/frontend
+      - ./frontend:/var/frontend
     # Overwrite the default Nginx configuration (shortcut to avoid building a pre-configured image)
     configs:
-        - source: frontend-nginx
-          target: /etc/nginx/conf.d/default.conf
+      - source: frontend-nginx
+        target: /etc/nginx/conf.d/default.conf
     deploy:
       replicas: 1
       resources:
@@ -50,13 +50,13 @@ services:
   # Back-end PHP REST API application
   backend:
     image: richarvey/nginx-php-fpm:1.2.1
-    # Mount the backend subdirectory of this project into /var/www in the container running Apache and mod-php
+    # Mount the backend subdirectory of this project into /var/backend in the container running Apache and mod-php
     volumes:
-        - ./backend:/var/backend
+      - ./backend:/var/backend
     # Overwrite the default Nginx configuration (shortcut to avoid building a pre-configured image)
     configs:
-        - source: backend-nginx
-          target: /etc/nginx/sites-available/default.conf
+      - source: backend-nginx
+        target: /etc/nginx/sites-available/default.conf
     deploy:
       replicas: 1
       resources:
@@ -74,6 +74,32 @@ services:
     # required in this case because we are re-using localhost to serve both applications.
     ports:
       - "9999:80"
+    networks:
+      - default
+
+# ███   ██▄   ██▄
+# █  █  █  █  █  █
+# █ ▀ ▄ █   █ █   █
+# █  ▄▀ █  █  █  █
+# ███   ███▀  ███▀
+
+  # Behavioural test runner
+  testrunner:
+    image: php:7.1-fpm
+    # Mount the backend subdirectory of this project into /var/backend in the container
+    volumes:
+        - ./backend:/var/backend
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 64M
+      restart_policy:
+        condition: on-failure
+      # Docker Swarm restriction, see notes above
+      placement:
+        constraints: [node.role == manager]
     networks:
       - default
 
