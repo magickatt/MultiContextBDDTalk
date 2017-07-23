@@ -1,8 +1,13 @@
 sudo: required
+dist: trusty
 language: php
+php:
+  - '7.1'
 install:
-  - cd backend && composer install --ignore-platform-reqs
+  - cd backend && composer install
 services:
   - docker
+script:
+  - cd backend && bin/phpunit
 
 
