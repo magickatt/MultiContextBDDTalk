@@ -28,6 +28,7 @@ before_script:
   # Deploy the stack of Docker containers
   - docker swarm init
   - docker stack deploy -c docker-compose.yml bddtalk
+  - docker stack ps bddtalk
 
 # Run tests
 script:
