@@ -1,0 +1,8 @@
+sudo: required
+language: php
+install:
+  - cd backend && composer install --ignore-platform-reqs
+services:
+  - docker
+
+
