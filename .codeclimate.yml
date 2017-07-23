@@ -23,6 +23,7 @@ exclude_paths:
 - "backend/composer.lock"
 - "**/bin/**/*"
 - "**/data/**/*"
+- "**/features/**/*"
 - "**/spec/**/*"
 - "**/tests/**/*"
 - "**/vendor/**/*"
