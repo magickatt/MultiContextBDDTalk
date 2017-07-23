@@ -1,5 +1,7 @@
 # Multi-context BDD Talk
 
+![Travis CI build status](https://www.travis-ci.org/magickatt/MultiContextBDDTalk.svg?branch=master)
+
 Demo for talk on how [Behaviour Driven Development](https://en.wikipedia.org/wiki/Behavior-driven_development) (BDD) can be used to test multiple contexts for modern websites separated into [single page applications](https://en.wikipedia.org/wiki/Single-page_application) and [REST APIs](https://en.wikipedia.org/wiki/Application_programming_interface#Web_APIs)
 
 This demonstrates how you can spin up a front-end and back-end container (which in reality would live in separate repositories) and run behavioural tests against one and both independently
