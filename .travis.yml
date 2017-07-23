@@ -4,10 +4,10 @@ language: php
 php:
   - '7.1'
 install:
-  - cd backend && composer install
+  - cd backend && composer install && -
 services:
   - docker
 script:
-  - cd backend && bin/phpunit
+  - cd backend && bin/phpunit && -
 
 
