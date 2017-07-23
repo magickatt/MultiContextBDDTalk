@@ -25,7 +25,7 @@ before_script:
   - docker swarm init
   - docker stack deploy -c docker-compose.yml bddtalk
   - docker stack ps bddtalk
-  - docker ps bddtalk
+  - docker ps
 
   # Download the Code Climate test coverage reporter
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
