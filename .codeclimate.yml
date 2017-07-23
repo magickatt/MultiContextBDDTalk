@@ -34,3 +34,4 @@ exclude_paths:
 - "**.xml"
 - "**.sh"
 - "**.md"
+- "LICENSE"

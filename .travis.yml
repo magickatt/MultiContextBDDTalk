@@ -1,4 +1,4 @@
-#sudo: required
+sudo: required
 dist: trusty
 language: php
 php:
@@ -18,6 +18,10 @@ before_script:
   # Download the Code Climate test coverage reporter
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
+
+  # Deploy the stack of Docker containers
+  - docker swarm init
+  - docker stack deploy -c docker-compose.yml bddtalk
 
 # Run tests
 script:
