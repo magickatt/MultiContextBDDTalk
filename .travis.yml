@@ -15,10 +15,6 @@ services:
 # Setup before tests are run
 before_script:
 
-  # Download the Code Climate test coverage reporter
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-
   # Update Docker
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -29,6 +25,11 @@ before_script:
   - docker swarm init
   - docker stack deploy -c docker-compose.yml bddtalk
   - docker stack ps bddtalk
+  - docker ps bddtalk
+
+  # Download the Code Climate test coverage reporter
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
 
 # Run tests
 script:
