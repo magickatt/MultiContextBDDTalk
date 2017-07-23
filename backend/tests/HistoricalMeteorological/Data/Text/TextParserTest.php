@@ -3,14 +3,14 @@
 namespace HistoricalMeteorological\Data\Parser\Text;
 
 use Generator;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use HistoricalMeteorological\Data\Parser\Strategy\RandomWhitespacePaddingStrategy;
 
 /**
  * Including as an integration test partially because I'm pretty sure this issue never really got solved...
  * @link https://github.com/phpspec/phpspec/issues/379
  */
-class TextParserTest extends PHPUnit_Framework_TestCase
+class TextParserTest extends TestCase
 {
     /** @var array */
     private $data = [

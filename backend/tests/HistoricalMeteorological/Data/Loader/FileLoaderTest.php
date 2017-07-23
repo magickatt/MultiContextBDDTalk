@@ -3,10 +3,10 @@
 namespace HistoricalMeteorological\Data\Parser;
 
 use Generator;
+use PHPUnit\Framework\TestCase;
 use HistoricalMeteorological\Data\Loader\FileLoader;
-use PHPUnit_Framework_TestCase;
 
-class FileLoaderTest extends PHPUnit_Framework_TestCase
+class FileLoaderTest extends TestCase
 {
     /** @var string */
     private $filename;

@@ -1,2 +1,11 @@
-formatter.name: dot 
+formatter.name: dot
+extensions:
+  LeanPHP\PhpSpec\CodeCoverage\CodeCoverageExtension:
+    format:
+      - php
+    output:
+      php: data/coverage/phpspec_coverage.cov
+    whitelist:
+      - src
+
 
