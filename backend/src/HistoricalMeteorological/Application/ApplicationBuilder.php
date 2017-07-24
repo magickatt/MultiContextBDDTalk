@@ -2,6 +2,7 @@
 
 namespace HistoricalMeteorological\Application;
 
+use Knp\Provider\ConsoleServiceProvider;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
 use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
@@ -15,7 +16,19 @@ class ApplicationBuilder
      */
     public function buildApplication(Application $application):Application
     {
-        return $this->registerDatabaseProvider($application);
+        return $this->registerDatabaseProvider(
+            $this->registerConsoleProvider($application)
+        );
+    }
+
+    /**
+     * Register the Silex console provider
+     * @param Application $application
+     * @return Application
+     */
+    private function registerConsoleProvider(Application $application):Application
+    {
+        return $application->register(new ConsoleServiceProvider());
     }
 
     /**
