@@ -42,7 +42,7 @@ class ApplicationBuilder
             $application->register(new DoctrineServiceProvider(), [
                 'db.options' => [
                     'driver'   => 'pdo_sqlite',
-                    'path'     => __DIR__.'/../../../data/historicalmeteorological.db',
+                    'path'     => __DIR__.'/../../../../database/historicalmeteorological.db',
                 ],
             ])
         );
@@ -61,8 +61,8 @@ class ApplicationBuilder
                 'mappings' => [
                     [
                         'type' => 'annotation',
-                        'namespace' => 'HistoricalMeteorological\Entities',
-                        'path' => __DIR__.'/src/HistoricalMeteorological/Entities',
+                        'namespace' => 'HistoricalMeteorological\Entity',
+                        'path' => __DIR__.'/src/HistoricalMeteorological/Entity',
                     ]
                 ],
             ],

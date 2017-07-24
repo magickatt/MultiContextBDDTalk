@@ -24,13 +24,13 @@ class TextParserTest extends TestCase
 
     public function setUp()
     {
-        $this->parser = new TextParser($this->createGenerator(), new RandomWhitespacePaddingStrategy());
+        $this->parser = new TextParser(new RandomWhitespacePaddingStrategy());
     }
 
     public function testParserShouldReturnAnArrayFromSpaceDelimitedText()
     {
         $i = 0;
-        foreach ($this->parser->getEntries() as $entry) {
+        foreach ($this->parser->getEntries($this->createGenerator()) as $entry) {
             $i++;
             $this->assertCount(7, $entry, 'Entry should have 7 items per row');
             $this->assertEquals($entry[0], '2017', 'All entries should be from 2017');

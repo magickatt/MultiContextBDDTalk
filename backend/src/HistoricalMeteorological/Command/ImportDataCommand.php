@@ -2,6 +2,9 @@
 
 namespace HistoricalMeteorological\Command;
 
+use DirectoryIterator;
+use Doctrine\ORM\EntityManager;
+use HistoricalMeteorological\Data\Converter;
 use Knp\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,14 +17,36 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ImportDataCommand extends Command
 {
+    const NAME = 'import:data';
+
+    /** @var Converter */
+    private $converter;
+
+    /**
+     * @param Converter $converter
+     */
+    public function __construct(Converter $converter)
+    {
+        $this->converter = $converter;
+        parent::__construct(self::NAME);
+    }
+
+    /**
+     * @inheritdoc
+     */
     protected function configure()
     {
         $this->setName('import:data')
              ->setDescription('Import or re-import data from text files.');
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Test');
+        $output->writeln('Importing historical meteorological data from text files.');
+        $this->converter->convert(new DirectoryIterator(__DIR__.'/../../../../database/txt'));
+        $output->writeln('Finished importing.');
     }
 }

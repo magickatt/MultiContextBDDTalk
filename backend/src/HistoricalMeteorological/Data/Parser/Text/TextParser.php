@@ -8,29 +8,25 @@ use HistoricalMeteorological\Data\Parser\Strategy\TextStrategyInterface;
 
 class TextParser implements ParserInterface
 {
-    /** @var Generator */
-    private $rows;
-
     /** @var TextStrategyInterface */
     private $textParsingStrategy;
 
-    /**
-     * @param Generator $rows
+    /**$rows
      * @param TextStrategyInterface $textParsingStrategy
      */
-    public function __construct(Generator $rows, TextStrategyInterface $textParsingStrategy)
+    public function __construct(TextStrategyInterface $textParsingStrategy)
     {
-        $this->rows = $rows;
         $this->textParsingStrategy = $textParsingStrategy;
     }
 
     /**
      * Get entry for each row
+     * @param Generator $rows
      * @return Generator
      */
-    public function getEntries():Generator
+    public function getEntries(Generator $rows):Generator
     {
-        foreach ($this->rows as $row) {
+        foreach ($rows as $row) {
             yield $this->textParsingStrategy->parseTextIntoArray($row);
         }
     }

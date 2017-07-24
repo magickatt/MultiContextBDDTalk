@@ -23,5 +23,14 @@ if (!isset($app['console'])) {
 }
 
 $console = $app['console'];
-$console->add(new HistoricalMeteorological\Command\ImportDataCommand());
+$console->add(new HistoricalMeteorological\Command\ImportDataCommand(
+        new HistoricalMeteorological\Data\Converter(
+            $app['orm.em'],
+            new HistoricalMeteorological\Data\Loader\FileLoader(),
+            new HistoricalMeteorological\Data\Parser\Text\TextParser(
+                new HistoricalMeteorological\Data\Parser\Strategy\RandomWhitespacePaddingStrategy()
+            )
+        )
+    )
+);
 $console->run();
