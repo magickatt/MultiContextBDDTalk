@@ -13,6 +13,9 @@ class DefaultControllerProvider extends AbstractControllerProvider
             return 'Hello World';
         });
 
+        $collection->get('/test', function (Application $application) {
+            return 'Test';
+        });
         return $collection;
     }
 }

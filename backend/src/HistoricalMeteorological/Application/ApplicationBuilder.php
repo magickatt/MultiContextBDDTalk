@@ -3,6 +3,9 @@
 namespace HistoricalMeteorological\Application;
 
 use HistoricalMeteorological\Controller\DefaultControllerProvider;
+use HistoricalMeteorological\Controller\LocationControllerProvider;
+use HistoricalMeteorological\Provider\EntryServiceProvider;
+use HistoricalMeteorological\Provider\LocationServiceProvider;
 use Knp\Provider\ConsoleServiceProvider;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
@@ -10,12 +13,6 @@ use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 
 class ApplicationBuilder
 {
-    const REGISTRATION_METHODS = [
-        'registerControllerProviders',
-        'registerConsoleProvider',
-        'registerDatabaseProvider'
-    ];
-
     /**
      * Configure the application as required
      * @param Application $application
@@ -23,17 +20,19 @@ class ApplicationBuilder
      */
     public function buildApplication(Application $application):Application
     {
-        foreach (self::REGISTRATION_METHODS as $registrationMethod) {
-            if (method_exists($this, $registrationMethod)) {
-                $this->$registrationMethod($application);
-            }
-        }
+        $this->registerControllerProviders($application);
+        $this->registerConsoleProvider($application);
+        $this->registerDatabaseProvider($application);
+        $this->registerServiceProviders($application);
+
         return $application;
     }
 
     private function registerControllerProviders(Application $application):Application
     {
         $application->mount('/', new DefaultControllerProvider());
+        $application->mount('/locations', new LocationControllerProvider());
+        //$application->mount('/entries', new DefaultControllerProvider());
         return $application;
     }
 
@@ -45,6 +44,14 @@ class ApplicationBuilder
     private function registerConsoleProvider(Application $application):Application
     {
         return $application->register(new ConsoleServiceProvider());
+    }
+
+    private function registerServiceProviders(Application $application):Application
+    {
+        $application['locations'] = $application->register(new LocationServiceProvider());
+        $application['entries'] = $application->register(new EntryServiceProvider());
+
+        return $application;
     }
 
     /**
