@@ -15,6 +15,9 @@ class ApplicationBuilderSpec extends ObjectBehavior
         $application->register(Argument::any(), Argument::type('array'))->willReturn($application);
         $application->mount(Argument::type('string'), Argument::any())->willReturn($application);
 
+        // Array access to the Dependency Injection container will invoke offsetSet as it implements the ArrayAccess interface
+        $application->offsetSet(Argument::type('string'), Argument::any())->shouldBeCalled();
+
         $this->buildApplication($application)->shouldReturn($application);
     }
 }
