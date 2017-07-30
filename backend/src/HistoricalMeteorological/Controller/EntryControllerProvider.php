@@ -2,11 +2,11 @@
 
 namespace HistoricalMeteorological\Controller;
 
-use HistoricalMeteorological\Service\LocationService;
+use HistoricalMeteorological\Service\EntryService;
 use Silex\Application;
 use Silex\ControllerCollection;
 
-class LocationControllerProvider extends AbstractControllerProvider
+class EntryControllerProvider extends AbstractControllerProvider
 {
     protected function registerControllerRoutes(Application $application, ControllerCollection $collection):ControllerCollection
     {
@@ -18,25 +18,26 @@ class LocationControllerProvider extends AbstractControllerProvider
     private function addListRoute(Application $application, ControllerCollection $collection)
     {
         $collection->get('/', function (Application $application) {
-            $service = $this->getLocationService($application);
-            return 'List';
+            $service = $this->getEntryService($application);
+            $entries = $service->getEntryList();
+            return print_r($entries, true);
         });
     }
 
     private function addViewRoute(Application $application, ControllerCollection $collection)
     {
         $collection->get('/{name}', function (Application $application) {
-            $service = $this->getLocationService($application);
+            $service = $this->getEntryService($application);
             return 'View';
         });
     }
 
     /**
      * @param Application $application
-     * @return LocationService
+     * @return EntryService
      */
-    private function getLocationService(Application $application):LocationService
+    private function getEntryService(Application $application):EntryService
     {
-        return $application['locations'];
+        return $application['entries'];
     }
 }

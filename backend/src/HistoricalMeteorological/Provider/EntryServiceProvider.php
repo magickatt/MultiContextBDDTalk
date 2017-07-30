@@ -2,29 +2,28 @@
 
 namespace HistoricalMeteorological\Provider;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use HistoricalMeteorological\Service\EntryService;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use HistoricalMeteorological\Service\EntryService;
 
 class EntryServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container
-     * @return EntryService
      */
     public function register(Container $container)
     {
-        return new EntryService(
+        $container['entries'] = new EntryService(
             $this->getDatabaseObjectRelationalMapperFromContainer($container)
         );
     }
 
     /**
      * @param Container $container
-     * @return ObjectManager
+     * @return EntityManagerInterface
      */
-    private function getDatabaseObjectRelationalMapperFromContainer(Container $container):ObjectManager
+    private function getDatabaseObjectRelationalMapperFromContainer(Container $container):EntityManagerInterface
     {
         return $container['orm.em'];
     }

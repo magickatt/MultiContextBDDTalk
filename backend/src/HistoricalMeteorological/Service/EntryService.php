@@ -2,14 +2,23 @@
 
 namespace HistoricalMeteorological\Service;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class EntryService
 {
-    private $objectManager;
+    private $entityManager;
 
-    public function __construct(ObjectManager $objectManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->objectManager = $objectManager;
+        $this->entityManager = $entityManager;
+    }
+
+    public function getEntryList()
+    {
+        $dql = 'SELECT e FROM HistoricalMeteorological\Entity\Entry AS e';
+        $query = $this->entityManager->createQuery($dql);
+        $query->setMaxResults(10);
+
+        return $query->getResult();
     }
 }

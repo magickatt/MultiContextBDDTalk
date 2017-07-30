@@ -2,29 +2,28 @@
 
 namespace HistoricalMeteorological\Provider;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use HistoricalMeteorological\Service\LocationService;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use HistoricalMeteorological\Service\LocationService;
 
 class LocationServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container
-     * @return LocationService
      */
     public function register(Container $container)
     {
-        return new LocationService(
+        $container['locations'] = new LocationService(
             $this->getDatabaseObjectRelationalMapperFromContainer($container)
         );
     }
 
     /**
      * @param Container $container
-     * @return ObjectManager
+     * @return EntityManagerInterface
      */
-    private function getDatabaseObjectRelationalMapperFromContainer(Container $container):ObjectManager
+    private function getDatabaseObjectRelationalMapperFromContainer(Container $container):EntityManagerInterface
     {
         return $container['orm.em'];
     }

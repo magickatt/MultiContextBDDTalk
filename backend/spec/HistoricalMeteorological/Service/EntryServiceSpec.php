@@ -2,16 +2,16 @@
 
 namespace spec\HistoricalMeteorological\Service;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use HistoricalMeteorological\Service\EntryService;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class EntryServiceSpec extends ObjectBehavior
 {
-    function let(ObjectManager $objectManager)
+    function let(EntityManagerInterface $entityManager)
     {
-        $this->beConstructedWith($objectManager);
+        $this->beConstructedWith($entityManager);
     }
 
     function it_is_initializable()

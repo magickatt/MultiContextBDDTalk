@@ -3,6 +3,7 @@
 namespace HistoricalMeteorological\Application;
 
 use HistoricalMeteorological\Controller\DefaultControllerProvider;
+use HistoricalMeteorological\Controller\EntryControllerProvider;
 use HistoricalMeteorological\Controller\LocationControllerProvider;
 use HistoricalMeteorological\Provider\EntryServiceProvider;
 use HistoricalMeteorological\Provider\LocationServiceProvider;
@@ -20,6 +21,8 @@ class ApplicationBuilder
      */
     public function buildApplication(Application $application):Application
     {
+        $application['debug'] = true;
+
         $this->registerControllerProviders($application);
         $this->registerConsoleProvider($application);
         $this->registerDatabaseProvider($application);
@@ -28,11 +31,17 @@ class ApplicationBuilder
         return $application;
     }
 
+    /**
+     * Register each controller provider based on different URL route prefixes
+     * @param Application $application
+     * @return Application
+     */
     private function registerControllerProviders(Application $application):Application
     {
         $application->mount('/', new DefaultControllerProvider());
         $application->mount('/locations', new LocationControllerProvider());
-        //$application->mount('/entries', new DefaultControllerProvider());
+        $application->mount('/entries', new EntryControllerProvider());
+
         return $application;
     }
 
@@ -48,8 +57,8 @@ class ApplicationBuilder
 
     private function registerServiceProviders(Application $application):Application
     {
-        $application['locations'] = $application->register(new LocationServiceProvider());
-        $application['entries'] = $application->register(new EntryServiceProvider());
+        $application->register(new LocationServiceProvider());
+        $application->register(new EntryServiceProvider());
 
         return $application;
     }
@@ -65,7 +74,7 @@ class ApplicationBuilder
             $application->register(new DoctrineServiceProvider(), [
                 'db.options' => [
                     'driver'   => 'pdo_sqlite',
-                    'path'     => __DIR__.'/../../../../database/historicalmeteorological.db',
+                    'path'     => __DIR__.'/../../../data/database/historicalmeteorological.db',
                 ],
             ])
         );
