@@ -8,6 +8,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use HistoricalMeteorological\Data\Loader\LoaderInterface;
 use HistoricalMeteorological\Data\Parser\ParserInterface;
 use SeekableIterator;
+use DirectoryIterator;
+use Symfony\Component\Finder\SplFileInfo;
 
 class Converter
 {
@@ -37,13 +39,14 @@ class Converter
     {
         foreach ($this->loader->getResources($location) as $resource) {
             $rows = $this->loader->getRows($resource);
-
             foreach ($this->parser->getEntries($rows) as $entry) {
+
                 $entity = $this->convertEntryToEntity($entry);
-                $entity->setLocation($resource->getBasename('.txt'));
+                $entity->setLocation($this->extractLocationSlugFromResource($resource));
                 if ($entity->hasYear()) {
                     $this->objectManager->persist($entity);
                 }
+
             }
             $this->objectManager->flush();
         }
@@ -83,22 +86,28 @@ class Converter
      */
     private function addOptionalPropertiesToEntityFromEntry(Entry $entity, array $entry)
     {
-        if ($entry[2] != '---') {
+        if (isset($entry[2]) && $entry[2] != '---') {
             $entity->setTemperatureMaximum((float)$entry[2]);
         }
-        if ($entry[3] != '---') {
+        if (isset($entry[3]) && $entry[3] != '---') {
             $entity->setTemperatureMinimum((float)$entry[3]);
         }
-        if ($entry[5] != '---') {
+        if (isset($entry[5]) && $entry[5] != '---') {
             $entity->setRainVolume((float)$entry[5]);
         }
-        if ($entry[6] != '---') {
+        if (isset($entry[6]) && $entry[6] != '---') {
             $entity->setSunDuration((float)$entry[6]);
         }
     }
 
-    private function convertHeaderToEntity(array $heading)
+    /**
+     * Quick way to determine the location slug
+     * @param DirectoryIterator $resource
+     * @return bool|string
+     */
+    private function extractLocationSlugFromResource(DirectoryIterator $resource)
     {
-        // @todo Create entity from location information in header
+        $basename = $resource->getBasename('.txt');
+        return substr($basename, 0, strlen($basename) - 5);
     }
 }

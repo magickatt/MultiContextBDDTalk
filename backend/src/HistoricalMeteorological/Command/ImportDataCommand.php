@@ -46,7 +46,7 @@ class ImportDataCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Importing historical meteorological data from text files.');
-        $this->converter->convert(new DirectoryIterator(__DIR__.'/../../../../database/txt'));
+        $this->converter->convert(new DirectoryIterator(__DIR__.'/../../../data/database/txt'));
         $output->writeln('Finished importing.');
     }
 }

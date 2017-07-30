@@ -2,6 +2,12 @@
 
 namespace HistoricalMeteorological\Entity;
 
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
+
 /**
  * @Entity
  * @Table(name="entries")
@@ -13,7 +19,7 @@ class Entry
      * @Column(type="integer")
      * @GeneratedValue
      */
-    private $id;
+    private $identifier;
 
     /** @Column(type="string") */
     private $location;

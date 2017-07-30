@@ -7,6 +7,8 @@ use HistoricalMeteorological\Controller\EntryControllerProvider;
 use HistoricalMeteorological\Controller\LocationControllerProvider;
 use HistoricalMeteorological\Provider\EntryServiceProvider;
 use HistoricalMeteorological\Provider\LocationServiceProvider;
+use HistoricalMeteorological\Provider\ResponseServiceProvider;
+use JDesrosiers\Silex\Provider\JmsSerializerServiceProvider;
 use Knp\Provider\ConsoleServiceProvider;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
@@ -26,6 +28,7 @@ class ApplicationBuilder
         $this->registerControllerProviders($application);
         $this->registerConsoleProvider($application);
         $this->registerDatabaseProvider($application);
+        $this->registerSerializerProvider($application);
         $this->registerServiceProviders($application);
 
         return $application;
@@ -59,6 +62,7 @@ class ApplicationBuilder
     {
         $application->register(new LocationServiceProvider());
         $application->register(new EntryServiceProvider());
+        $application->register(new ResponseServiceProvider());
 
         return $application;
     }
@@ -98,6 +102,13 @@ class ApplicationBuilder
                     ]
                 ],
             ],
+        ));
+    }
+
+    private function registerSerializerProvider(Application $application)
+    {
+        $application->register(new JmsSerializerServiceProvider(), array(
+            "serializer.srcDir" => __DIR__ . "/vendor/jms/serializer/src",
         ));
     }
 }

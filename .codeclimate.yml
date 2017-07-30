@@ -8,12 +8,6 @@ engines:
       config:
         file_extensions:
         - php
-  duplication:
-    enabled: true
-    config:
-      languages:
-      - php:
-      - javascript:
 ratings:
   paths:
   - "backend/src/**.php"
