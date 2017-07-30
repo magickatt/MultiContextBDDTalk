@@ -13,6 +13,7 @@ class ApplicationBuilderSpec extends ObjectBehavior
     {
         $application->register(Argument::any())->willReturn($application);
         $application->register(Argument::any(), Argument::type('array'))->willReturn($application);
+        $application->mount(Argument::type('string'), Argument::any())->willReturn($application);
 
         $this->buildApplication($application)->shouldReturn($application);
     }

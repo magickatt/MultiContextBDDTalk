@@ -2,6 +2,7 @@
 
 namespace HistoricalMeteorological\Application;
 
+use HistoricalMeteorological\Controller\DefaultControllerProvider;
 use Knp\Provider\ConsoleServiceProvider;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
@@ -9,6 +10,12 @@ use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 
 class ApplicationBuilder
 {
+    const REGISTRATION_METHODS = [
+        'registerControllerProviders',
+        'registerConsoleProvider',
+        'registerDatabaseProvider'
+    ];
+
     /**
      * Configure the application as required
      * @param Application $application
@@ -16,9 +23,18 @@ class ApplicationBuilder
      */
     public function buildApplication(Application $application):Application
     {
-        return $this->registerDatabaseProvider(
-            $this->registerConsoleProvider($application)
-        );
+        foreach (self::REGISTRATION_METHODS as $registrationMethod) {
+            if (method_exists($this, $registrationMethod)) {
+                $this->$registrationMethod($application);
+            }
+        }
+        return $application;
+    }
+
+    private function registerControllerProviders(Application $application):Application
+    {
+        $application->mount('/', new DefaultControllerProvider());
+        return $application;
     }
 
     /**

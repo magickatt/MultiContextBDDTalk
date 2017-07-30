@@ -6,8 +6,4 @@ use HistoricalMeteorological\Application\ApplicationBuilder;
 $builder = new ApplicationBuilder();
 $application = $builder->buildApplication(new Silex\Application());
 
-$application->get('/', function() use($application) {
-    return 'Hello World';
-});
-
 return $application;
