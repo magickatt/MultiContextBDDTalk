@@ -108,6 +108,6 @@ class Converter
     private function extractLocationSlugFromResource(DirectoryIterator $resource)
     {
         $basename = $resource->getBasename('.txt');
-        return substr($basename, 0, strlen($basename) - 5);
+        return substr($basename, 0, strlen($basename) - 4); // remove "data" from the end
     }
 }

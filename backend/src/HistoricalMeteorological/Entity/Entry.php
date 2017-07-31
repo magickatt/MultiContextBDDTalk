@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\GeneratedValue;
 
 /**
@@ -16,34 +18,53 @@ class Entry
 {
     /**
      * @Id
-     * @Column(type="integer")
+     * @Column(type="integer", name="id")
      * @GeneratedValue
      */
-    private $identifier;
+    private $id;
 
-    /** @Column(type="string") */
+    /**
+     * @OneToOne(targetEntity="HistoricalMeteorological\Entity\Location")
+     * @JoinColumn(name="location", referencedColumnName="id")
+     */
     private $location;
 
-    /** @Column(type="integer") */
+    /**
+     * @Column(type="integer")
+     * @var int
+     */
     private $year;
 
-    /** @Column(type="integer") */
+    /**
+     * @Column(type="integer")
+     * @var int
+     */
     private $month;
 
-    /** @Column(type="float", name="temperature_maximum") */
+    /**
+     * @Column(type="float", name="temperature_maximum")
+     */
     private $temperatureMaximum;
 
-    /** @Column(type="float", name="temperature_minimum") */
+    /**
+     * @Column(type="float", name="temperature_minimum")
+     */
     private $temperatureMinimum;
 
-    /** @Column(type="float", name="rain_volume") */
+    /**
+     * @Column(type="float", name="rain_volume")
+     * @var float
+     */
     private $rainVolume;
 
-    /** @Column(type="float", name="sun_duration") */
+    /**
+     * @Column(type="float", name="sun_duration")
+     * @var float
+     */
     private $sunDuration;
 
     /**
-     * @return mixed
+     * @return Location
      */
     public function getLocation()
     {
@@ -51,7 +72,7 @@ class Entry
     }
 
     /**
-     * @param mixed $location
+     * @param Location $location
      * @return Entry
      */
     public function setLocation($location)
@@ -109,7 +130,7 @@ class Entry
     }
 
     /**
-     * @return mixed
+     * @return float
      */
     public function getTemperatureMaximum()
     {
@@ -129,7 +150,7 @@ class Entry
     /**
      * @return float
      */
-    public function getTemperatureMinimum():float
+    public function getTemperatureMinimum()
     {
         return $this->temperatureMinimum;
     }
@@ -147,7 +168,7 @@ class Entry
     /**
      * @return float
      */
-    public function getRainVolume():float
+    public function getRainVolume()
     {
         return $this->rainVolume;
     }
@@ -165,7 +186,7 @@ class Entry
     /**
      * @return float
      */
-    public function getSunDuration():float
+    public function getSunDuration()
     {
         return $this->sunDuration;
     }

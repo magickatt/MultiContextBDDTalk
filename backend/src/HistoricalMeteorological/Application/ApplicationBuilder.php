@@ -28,7 +28,6 @@ class ApplicationBuilder
         $this->registerControllerProviders($application);
         $this->registerConsoleProvider($application);
         $this->registerDatabaseProvider($application);
-        $this->registerSerializerProvider($application);
         $this->registerServiceProviders($application);
 
         return $application;
@@ -102,13 +101,6 @@ class ApplicationBuilder
                     ]
                 ],
             ],
-        ));
-    }
-
-    private function registerSerializerProvider(Application $application)
-    {
-        $application->register(new JmsSerializerServiceProvider(), array(
-            "serializer.srcDir" => __DIR__ . "/vendor/jms/serializer/src",
         ));
     }
 }

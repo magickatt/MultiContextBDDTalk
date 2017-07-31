@@ -9,11 +9,6 @@ use Prophecy\Argument;
 
 class ResponseServiceSpec extends ObjectBehavior
 {
-    function let(Serializer $serializer)
-    {
-        $this->beConstructedWith($serializer);
-    }
-
     function it_is_initializable()
     {
         $this->shouldHaveType(ResponseService::class);

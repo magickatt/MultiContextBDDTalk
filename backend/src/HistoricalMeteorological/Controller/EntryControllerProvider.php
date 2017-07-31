@@ -2,11 +2,11 @@
 
 namespace HistoricalMeteorological\Controller;
 
-use HistoricalMeteorological\Service\LocationService;
 use Silex\Application;
 use Silex\ControllerCollection;
 use HistoricalMeteorological\Service\EntryService;
 use HistoricalMeteorological\Service\ResponseService;
+use HistoricalMeteorological\Service\LocationService;
 
 class EntryControllerProvider extends AbstractControllerProvider
 {
@@ -14,7 +14,7 @@ class EntryControllerProvider extends AbstractControllerProvider
     {
         $this->addListAllRoute($application, $collection);
         $this->addListByLocationRoute($application, $collection);
-        //$this->addListByLocationAndYearRoute($application, $collection);
+        $this->addListByLocationAndYearRangeRoute($application, $collection);
         return $collection;
     }
 
@@ -26,24 +26,42 @@ class EntryControllerProvider extends AbstractControllerProvider
             $responseService = $this->getResponseServiceFromContainer($application);
 
             $entries = $entryService->getEntryList();
-            return $responseService->createPluralResponse($entries);
+            return $responseService->createEntryCollectionResponse($entries);
 
         });
     }
 
     private function addListByLocationRoute(Application $application, ControllerCollection $collection)
     {
-        $collection->get('/{locationSlug}', function (Application $application, $locationSlug) {
+        $collection->get('/{locationId}', function (Application $application, $locationId) {
 
             $entryService = $this->getEntryServiceFromContainer($application);
             $locationService = $this->getLocationServiceFromContainer($application);
             $responseService = $this->getResponseServiceFromContainer($application);
 
-            $location = $locationService->getLocationByName($locationSlug);
+            $location = $locationService->getLocationById($locationId);
             $entries = $entryService->getEntryListByLocation($location);
-            return $responseService->createPluralResponse($entries);
+            return $responseService->createEntryCollectionResponse($entries);
 
         });
+    }
+
+    private function addListByLocationAndYearRangeRoute(Application $application, ControllerCollection $collection)
+    {
+        $locationAndYearRangeRoute = function (Application $application, $locationId, $yearFrom, $yearTo = null) {
+
+            $entryService = $this->getEntryServiceFromContainer($application);
+            $locationService = $this->getLocationServiceFromContainer($application);
+            $responseService = $this->getResponseServiceFromContainer($application);
+
+            $location = $locationService->getLocationById($locationId);
+            $entries = $entryService->getEntryListByLocationAndYearRange($location, (int)$yearFrom, (!is_null($yearTo) ? (int)$yearTo : (int)$yearFrom));
+            return $responseService->createEntryCollectionResponse($entries);
+
+        };
+
+        $collection->get('/{locationId}/{yearFrom}', $locationAndYearRangeRoute);
+        $collection->get('/{locationId}/{yearFrom}/{yearTo}', $locationAndYearRangeRoute);
     }
 
     /**

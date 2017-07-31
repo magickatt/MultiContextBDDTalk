@@ -3,6 +3,7 @@
 namespace HistoricalMeteorological\Controller;
 
 use HistoricalMeteorological\Service\LocationService;
+use HistoricalMeteorological\Service\ResponseService;
 use Silex\Application;
 use Silex\ControllerCollection;
 
@@ -18,16 +19,26 @@ class LocationControllerProvider extends AbstractControllerProvider
     private function addListRoute(Application $application, ControllerCollection $collection)
     {
         $collection->get('/', function (Application $application) {
-            $service = $this->getLocationService($application);
-            return 'List';
+
+            $locationService = $this->getLocationServiceFromContainer($application);
+            $responseService = $this->getResponseServiceFromContainer($application);
+
+            $locations = $locationService->getLocationList();
+            return $responseService->createLocationCollectionResponse($locations);
+
         });
     }
 
     private function addViewRoute(Application $application, ControllerCollection $collection)
     {
-        $collection->get('/{name}', function (Application $application) {
-            $service = $this->getLocationService($application);
-            return 'View';
+        $collection->get('/{id}', function (Application $application, $id) {
+
+            $locationService = $this->getLocationServiceFromContainer($application);
+            $responseService = $this->getResponseServiceFromContainer($application);
+
+            $location = $locationService->getLocationById($id);
+            return $responseService->createLocationResponse($location);
+
         });
     }
 
@@ -35,8 +46,17 @@ class LocationControllerProvider extends AbstractControllerProvider
      * @param Application $application
      * @return LocationService
      */
-    private function getLocationService(Application $application):LocationService
+    private function getLocationServiceFromContainer(Application $application):LocationService
     {
         return $application['locations'];
+    }
+
+    /**
+     * @param Application $application
+     * @return ResponseService
+     */
+    private function getResponseServiceFromContainer(Application $application):ResponseService
+    {
+        return $application['response'];
     }
 }

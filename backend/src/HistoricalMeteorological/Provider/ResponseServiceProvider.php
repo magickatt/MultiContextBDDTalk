@@ -2,12 +2,9 @@
 
 namespace HistoricalMeteorological\Provider;
 
-use HistoricalMeteorological\Service\ResponseService;
-use JMS\Serializer\Serializer;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
-use Doctrine\ORM\EntityManagerInterface;
-use HistoricalMeteorological\Service\EntryService;
+use HistoricalMeteorological\Service\ResponseService;
 
 class ResponseServiceProvider implements ServiceProviderInterface
 {
@@ -16,17 +13,6 @@ class ResponseServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-        $container['response'] = new ResponseService(
-            $this->getSerializerFromContainer($container)
-        );
-    }
-
-    /**
-     * @param Container $container
-     * @return Serializer
-     */
-    private function getSerializerFromContainer(Container $container):Serializer
-    {
-        return $container['serializer'];
+        $container['response'] = new ResponseService();
     }
 }

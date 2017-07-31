@@ -2,27 +2,25 @@
 
 namespace HistoricalMeteorological\Service;
 
-use JMS\Serializer\Serializer;
-use Symfony\Component\HttpFoundation\Response;
+use HistoricalMeteorological\Collection\LocationCollection;
+use HistoricalMeteorological\Entity\Location;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use HistoricalMeteorological\Collection\EntryCollection;
 
 class ResponseService
 {
-    const RESPONSE_FORMAT = 'json';
-
-    /** @var Serializer */
-    private $serializer;
-
-    public function __construct(Serializer $serializer)
+    public function createEntryCollectionResponse(EntryCollection $collection)
     {
-        $this->serializer = $serializer;
+        return new JsonResponse($collection->toArray());
     }
 
-    public function createPluralResponse(array $items):Response
+    public function createLocationCollectionResponse(LocationCollection $collection)
     {
-        return new Response(
-            $this->serializer->serialize($items, self::RESPONSE_FORMAT),
-            200,
-            ['Content-Type' => 'application/json']
-        );
+        return new JsonResponse($collection->toArray());
+    }
+
+    public function createLocationResponse(Location $location)
+    {
+        return new JsonResponse(LocationCollection::transformLocationToArray($location));
     }
 }
