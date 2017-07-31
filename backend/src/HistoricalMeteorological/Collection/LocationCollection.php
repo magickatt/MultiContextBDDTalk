@@ -3,23 +3,7 @@
 namespace HistoricalMeteorological\Collection;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use HistoricalMeteorological\Entity\Location;
 
-class LocationCollection extends ArrayCollection
+class LocationCollection extends ArrayCollection implements CollectionInterface
 {
-    public function toArray()
-    {
-        return array_map(array(self::class, 'transformLocationToArray'), parent::toArray());
-    }
-
-    public static function transformLocationToArray(Location $location)
-    {
-        return [
-            'id' => $location->getId(),
-            'name' => $location->getName(),
-            'latitude' => $location->getLatitude(),
-            'longitude' => $location->getLongitude(),
-            'amsl' => $location->getDistanceAboveMeanSeaLevel()
-        ];
-    }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\HistoricalMeteorological\Controller;
+namespace spec\HistoricalMeteorological\Provider\Controller;
 
-use HistoricalMeteorological\Controller\DefaultControllerProvider;
+use HistoricalMeteorological\Provider\Controller\DefaultControllerProvider;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

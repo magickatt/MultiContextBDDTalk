@@ -1,11 +1,11 @@
 <?php
 
-namespace HistoricalMeteorological\Controller;
+namespace HistoricalMeteorological\Provider\Controller;
 
-use HistoricalMeteorological\Service\LocationService;
-use HistoricalMeteorological\Service\ResponseService;
 use Silex\Application;
 use Silex\ControllerCollection;
+use HistoricalMeteorological\Service\LocationService;
+use HistoricalMeteorological\Service\ResponseService;
 
 class LocationControllerProvider extends AbstractControllerProvider
 {

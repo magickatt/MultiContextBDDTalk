@@ -1,6 +1,6 @@
 <?php
 
-namespace HistoricalMeteorological\Controller;
+namespace HistoricalMeteorological\Provider\Controller;
 
 use Silex\Application;
 use Silex\ControllerCollection;

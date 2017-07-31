@@ -2,17 +2,16 @@
 
 namespace HistoricalMeteorological\Application;
 
-use HistoricalMeteorological\Controller\DefaultControllerProvider;
-use HistoricalMeteorological\Controller\EntryControllerProvider;
-use HistoricalMeteorological\Controller\LocationControllerProvider;
+use Silex\Application;
+use Silex\Provider\DoctrineServiceProvider;
+use Knp\Provider\ConsoleServiceProvider;
+use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
+use HistoricalMeteorological\Provider\Controller\DefaultControllerProvider;
+use HistoricalMeteorological\Provider\Controller\EntryControllerProvider;
+use HistoricalMeteorological\Provider\Controller\LocationControllerProvider;
 use HistoricalMeteorological\Provider\EntryServiceProvider;
 use HistoricalMeteorological\Provider\LocationServiceProvider;
 use HistoricalMeteorological\Provider\ResponseServiceProvider;
-use JDesrosiers\Silex\Provider\JmsSerializerServiceProvider;
-use Knp\Provider\ConsoleServiceProvider;
-use Silex\Application;
-use Silex\Provider\DoctrineServiceProvider;
-use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 
 class ApplicationBuilder
 {
