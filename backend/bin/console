@@ -30,7 +30,8 @@ $console->add(new HistoricalMeteorological\Command\ImportDataCommand(
             new HistoricalMeteorological\Data\Parser\Text\TextParser(
                 new HistoricalMeteorological\Data\Parser\Strategy\RandomWhitespacePaddingStrategy()
             )
-        )
+        ),
+        new DirectoryIterator(__DIR__.'/../data/database/txt')
     )
 );
 $console->run();

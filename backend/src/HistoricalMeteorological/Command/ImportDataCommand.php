@@ -18,16 +18,23 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ImportDataCommand extends Command
 {
     const NAME = 'import:data';
+    const DESCRIPTION = 'Import or re-import data from text files.';
 
     /** @var Converter */
     private $converter;
 
+    /** @var DirectoryIterator  */
+    private $directoryIterator;
+
     /**
      * @param Converter $converter
+     * @param DirectoryIterator $directoryIterator
      */
-    public function __construct(Converter $converter)
+    public function __construct(Converter $converter, DirectoryIterator $directoryIterator)
     {
         $this->converter = $converter;
+        $this->directoryIterator = $directoryIterator;
+
         parent::__construct(self::NAME);
     }
 
@@ -36,8 +43,8 @@ class ImportDataCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('import:data')
-             ->setDescription('Import or re-import data from text files.');
+        $this->setName(self::NAME)
+             ->setDescription(self::DESCRIPTION);
     }
 
     /**
@@ -46,7 +53,7 @@ class ImportDataCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Importing historical meteorological data from text files.');
-        $this->converter->convert(new DirectoryIterator(__DIR__.'/../../../data/database/txt'));
+        $this->converter->convert($this->directoryIterator);
         $output->writeln('Finished importing.');
     }
 }
