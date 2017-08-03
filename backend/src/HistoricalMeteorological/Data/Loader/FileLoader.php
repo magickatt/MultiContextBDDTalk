@@ -41,9 +41,10 @@ class FileLoader implements LoaderInterface
         if (!$directory->isDir() || !$directory->isReadable()) {
             throw new InvalidArgumentException('Directory is either not actually a directory or not accessible');
         }
-
         foreach ($directory as $file) {
-            yield $file;
+            if (!$file->isDot() && $file->isFile()) {
+                yield $file;
+            }
         }
     }
 

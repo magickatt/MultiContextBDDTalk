@@ -3,8 +3,10 @@ extensions:
   LeanPHP\PhpSpec\CodeCoverage\CodeCoverageExtension:
     format:
       - php
+      - html
     output:
       php: data/coverage/phpspec_coverage.cov
+      html: data/coverage/phpspec_coverage.html
     whitelist:
       - src
 

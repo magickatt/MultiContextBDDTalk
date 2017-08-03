@@ -67,7 +67,7 @@ class Entry
      * @param Location $location
      * @return Entry
      */
-    public function setLocation($location)
+    public function setLocation(Location $location)
     {
         $this->location = $location;
         return $this;
