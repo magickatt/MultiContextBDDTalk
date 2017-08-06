@@ -85,7 +85,7 @@ services:
 
   # Behavioural test runner
   testrunner:
-    image: php:7.1-fpm
+    image: magickatt/behat-mink
     # Mount the backend subdirectory of this project into /var/backend in the container
     volumes:
         - ./backend:/var/backend
