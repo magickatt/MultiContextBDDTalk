@@ -4,9 +4,10 @@ language: php
 php:
   - '7.1'
 
-# Install back-end package dependencies
+# Install back-end and front-end package dependencies
 install:
   - cd backend && composer install && cd -
+  - cd frontend && npm install && cd -
 
 # Ensure Docker is running
 services:
