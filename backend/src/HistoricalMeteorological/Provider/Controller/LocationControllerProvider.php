@@ -18,7 +18,7 @@ class LocationControllerProvider extends AbstractControllerProvider
 
     private function addListRoute(Application $application, ControllerCollection $collection)
     {
-        $collection->get('/', function (Application $application) {
+        $collection->get('', function (Application $application) {
 
             $locationService = $this->getLocationServiceFromContainer($application);
             $responseService = $this->getResponseServiceFromContainer($application);

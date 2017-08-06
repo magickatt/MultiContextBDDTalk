@@ -9,6 +9,15 @@ angular.module('myApp.compare_locations', ['ngRoute'])
   });
 }])
 
-.controller('CompareLocationsCtrl', [function() {
+.controller('CompareLocationsCtrl', ['$scope', 'LocationList', function($scope, LocationList) {
+
+    $scope.selectedLocation = null;
+    $scope.locationList = [];
+
+    var locations = LocationList.get({}, function() {
+        console.log(locations);
+        $scope.locationList = locations.data;
+    });
 
 }]);
+

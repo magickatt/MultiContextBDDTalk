@@ -5,6 +5,7 @@ namespace HistoricalMeteorological\Application;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
 use Knp\Provider\ConsoleServiceProvider;
+use JDesrosiers\Silex\Provider\CorsServiceProvider;
 use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use HistoricalMeteorological\Provider\Controller\DefaultControllerProvider;
 use HistoricalMeteorological\Provider\Controller\EntryControllerProvider;
@@ -42,6 +43,16 @@ class ApplicationBuilder
         $application->mount('/', new DefaultControllerProvider());
         $application->mount('/locations', new LocationControllerProvider());
         $application->mount('/entries', new EntryControllerProvider());
+
+        $this->registerCorsProvider($application);
+
+        return $application;
+    }
+
+    private function registerCorsProvider(Application $application):Application
+    {
+        $application->register(new CorsServiceProvider(), ['cors.allowOrigin' => '*']);
+        $application["cors-enabled"]($application);
 
         return $application;
     }

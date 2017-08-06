@@ -1,4 +1,9 @@
-<p>Cat hamburger.</p>
+<form>
+<select name="location-dropdown" ng-model="selectedLocation"
+        ng-options="item.id as item.name for item in locationList">
+  <option value="">Select Account</option>
+</select>
+</form>
 <p>
   Showing of 'interpolate' filter:
   {{ 'Current version is v%VERSION%.' | interpolate }}

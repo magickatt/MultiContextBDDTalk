@@ -15,6 +15,10 @@ use HistoricalMeteorological\Collection\EntryCollection;
 
 class ResponseService
 {
+    const HEADERS = [
+        'Access-Control-Allow-Origin' => '*'
+    ];
+
     public function createEntryCollectionResponse(EntryCollection $collection)
     {
         $summary = EntryCollectionSummaryCalculator::summariseEntryCollection($collection, new EntrySummary());
@@ -33,22 +37,25 @@ class ResponseService
         ]);
     }
 
-    public function createLocationResponse(Location $location)
+    public function createLocationResponse(Location $location, int $responseCode = 200)
     {
-        return $this->createSingularResponse(LocationTransformer::transformLocationToArray($location));
+        return $this->createSingularResponse(LocationTransformer::transformLocationToArray($location), $responseCode);
     }
 
-    private function createSingularResponse(array $array)
+    private function createSingularResponse(array $array, int $responseCode = 200)
     {
-        return new JsonResponse(['data' => $array]);
+        return new JsonResponse(['data' => $array], $responseCode);
     }
 
-    private function createPluralResponse(CollectionInterface $collection)
+    private function createPluralResponse(CollectionInterface $collection, int $responseCode = 200)
     {
-        return new JsonResponse([
-            'data' => $collection->toArray(),
-            'meta' => [],
-            'links' => []
-        ]);
+        return new JsonResponse(
+            [
+                'data' => $collection->toArray(),
+                'meta' => [],
+                'links' => []
+            ],
+            $responseCode
+        );
     }
 }
