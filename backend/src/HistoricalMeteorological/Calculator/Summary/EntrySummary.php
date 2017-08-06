@@ -3,7 +3,6 @@
 namespace HistoricalMeteorological\Calculator\Summary;
 
 use HistoricalMeteorological\Entity\Entry;
-use HistoricalMeteorological\Transformer\EntrySummaryTransformer;
 
 class EntrySummary
 {
@@ -19,6 +18,7 @@ class EntrySummary
     /** @var float */
     private $totalSunDuration;
 
+    /** @var int */
     private $count = 0;
 
     /**
