@@ -24,22 +24,18 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
 .factory("Location", function($resource) {
     return $resource("http://" + hostname + "/locations/:id");
-    // return $resource("http://backend/locations/:id");
 })
 
 .factory("LocationList", function($resource) {
     return $resource("http://" + hostname + "/locations/");
-    // return $resource("http://backend/locations/");
 })
 
 .factory("LocationYearList", function($resource) {
     return $resource("http://" + hostname + "/locations/:id/years-available");
-    // return $resource("http://backend/locations/:id/years-available");
 })
 
 .factory("EntryList", function($resource) {
     return $resource("http://" + hostname + "/entries/:id/:yearFrom/:yearTo");
-    // return $resource("http://backend/entries/:id/:yearFrom/:yearTo");
 })
 
 // https://stackoverflow.com/a/21482265

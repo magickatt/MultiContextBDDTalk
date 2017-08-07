@@ -45,6 +45,9 @@ class FrontendContext extends MinkContext
      */
     public function iShouldFindInTheThoseLocations($name)
     {
+        // Need to replace this with a spin
+        sleep(1);
+
         $this->selectOption('location-dropdown', $name);
     }
 }
