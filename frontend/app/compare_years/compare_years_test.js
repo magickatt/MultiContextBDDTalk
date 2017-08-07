@@ -1,8 +1,8 @@
 'use strict';
 
-describe('myApp.compare_years module', function() {
+describe('bddTalk.compare_years module', function() {
 
-  beforeEach(module('myApp.compare_years'));
+  beforeEach(module('bddTalk.compare_years'));
 
   describe('compare_years controller', function(){
 

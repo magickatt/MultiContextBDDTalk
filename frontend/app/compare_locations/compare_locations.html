@@ -2,43 +2,43 @@
   <div class="field is-grouped-multiline">
     <div class="control">
       <div class="select">
-        <select id="location-dropdown" name="location-dropdown"
-                ng-model="selectedLocation"
+        <select id="location1-dropdown" name="location1-dropdown"
+                ng-model="selectedLocation1"
                 ng-options="item.id as item.name for item in locationList"
                 ng-change="onLocationChange()">
         </select>
       </div>
       <div class="select">
-        <select id="year-from-dropdown" name="year-from-dropdown"
-                ng-model="selectedYearFrom"
-                ng-options="item for item in yearList"
-                ng-change="onYearChange()">
+        <select id="location2-dropdown" name="location2-dropdown"
+                ng-model="selectedLocation2"
+                ng-options="item.id as item.name for item in locationList"
+                ng-change="onLocationChange()">
         </select>
       </div>
       <div class="select">
         <select id="year-to-dropdown" name="year-to-dropdown"
-                ng-model="selectedYearTo"
+                ng-model="selectedYear"
                 ng-options="item for item in yearList"
                 ng-change="onYearChange()">
         </select>
       </div>
     </div>
-    <p class="help">Please select the location and year range to display entries in the table.</p>
+    <p class="help">Please select both locations to compare for which year to display entries in the table.</p>
   </div>
 </form>
 <table class="table" ng-table="entryTable">
   <thead>
-    <tr>
-      <th>Year</th>
-      <th>Month</th>
-      <th>Rain (mm)</th>
-      <th>Sun (hrs)</th>
-      <th>Temp min (c)</th>
-      <th>Temp max (c)</th>
-    </tr>
+  <tr>
+    <th>Location</th>
+    <th>Month</th>
+    <th>Rain (mm)</th>
+    <th>Sun (hrs)</th>
+    <th>Temp min (c)</th>
+    <th>Temp max (c)</th>
+  </tr>
   </thead>
   <tr ng-repeat="entry in entries.data">
-    <td data-title="'Year'">{{entry.year}}</td>
+    <td data-title="'Year'">{{entry.location}}</td>
     <td data-title="'Month'">{{entry.month | month}}</td>
     <td data-title="'Rain'">{{entry.rain_volume | number: 1}}</td>
     <td data-title="'Sun'">{{entry.sun_duration | number: 1}}</td>

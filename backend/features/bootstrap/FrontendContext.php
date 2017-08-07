@@ -9,7 +9,8 @@ use PHPUnit\Framework\Assert;
 class FrontendContext extends MinkContext
 {
     const NAME_TO_URI_MAP = [
-        'year comparison' => '#!/compare_locations'
+        'year comparison' => '#!/compare_years',
+        'location comparison' => '#!/compare_locations'
     ];
 
     /**
@@ -21,6 +22,14 @@ class FrontendContext extends MinkContext
      */
     public function __construct($baseUrl)
     {
+
+    }
+
+    /**
+     * @BeforeScenario
+     */
+    public function resizeViewport(\Behat\Behat\Hook\Scope\BeforeScenarioScope $scope) {
+        $this->getSession()->resizeWindow(1280, 1024, 'current');
     }
 
     /**
@@ -30,6 +39,7 @@ class FrontendContext extends MinkContext
     {
         Assert::assertArrayHasKey($name, self::NAME_TO_URI_MAP);
         $this->visit(self::NAME_TO_URI_MAP[$name]);
+        //$this->pressButton('compare-years-button');
     }
 
     /**

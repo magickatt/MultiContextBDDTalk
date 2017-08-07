@@ -15,6 +15,7 @@ class EntryControllerProvider extends AbstractControllerProvider
         $this->addListAllRoute($application, $collection);
         $this->addListByLocationRoute($application, $collection);
         $this->addListByLocationAndYearRangeRoute($application, $collection);
+        $this->addListByLocationPairAndYearRoute($application, $collection);
         return $collection;
     }
 
@@ -62,6 +63,24 @@ class EntryControllerProvider extends AbstractControllerProvider
 
         $collection->get('/{locationId}/{yearFrom}', $locationAndYearRangeRoute);
         $collection->get('/{locationId}/{yearFrom}/{yearTo}', $locationAndYearRangeRoute);
+    }
+
+    private function addListByLocationPairAndYearRoute(Application $application, ControllerCollection $collection)
+    {
+        $locationPairAndYearRoute = function (Application $application, $location1Id, $location2Id, $year) {
+
+            $entryService = $this->getEntryServiceFromContainer($application);
+            $locationService = $this->getLocationServiceFromContainer($application);
+            $responseService = $this->getResponseServiceFromContainer($application);
+
+            $location1 = $locationService->getLocationById($location1Id);
+            $location2 = $locationService->getLocationById($location2Id);
+            $entries = $entryService->getEntryListByLocationPairAndYear($location1, $location2, (int)$year);
+            return $responseService->createEntryCollectionResponse($entries);
+
+        };
+
+        $collection->get('/{location1Id}/{location2Id}/{year}/compare', $locationPairAndYearRoute);
     }
 
     /**

@@ -1,4 +1,0 @@
-Feature: Compare 2 locations to each other for the same year
-
-  Scenario: Visit the homepage
-    Given I am on the homepage

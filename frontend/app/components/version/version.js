@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('myApp.version', [
-  'myApp.version.interpolate-filter',
-  'myApp.version.version-directive'
+angular.module('bddTalk.version', [
+  'bddTalk.version.interpolate-filter',
+  'bddTalk.version.version-directive'
 ])
 
 .value('version', '0.1');

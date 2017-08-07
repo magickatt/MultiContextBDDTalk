@@ -16,4 +16,9 @@ class YearCollection implements CollectionInterface
         return $this->elements;
     }
 
+    public function merge(CollectionInterface $collection)
+    {
+        $this->elements = array_merge($this->elements, $collection->toArray());
+        return $this;
+    }
 }

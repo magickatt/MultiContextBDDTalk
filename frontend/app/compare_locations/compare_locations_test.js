@@ -1,8 +1,8 @@
 'use strict';
 
-describe('myApp.compare_locations module', function() {
+describe('bddTalk.compare_locations module', function() {
 
-  beforeEach(module('myApp.compare_locations'));
+  beforeEach(module('bddTalk.compare_locations'));
 
   describe('compare_locations controller', function(){
 

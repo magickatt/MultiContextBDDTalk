@@ -33,17 +33,24 @@ class LocationControllerProvider extends AbstractControllerProvider
 
     private function addListYearsAvailableRoute(Application $application, ControllerCollection $collection)
     {
-        $collection->get('/{locationId}/years-available', function (Application $application, $locationId) {
+        $yearsAvailableRoute = function (Application $application, $location1Id, $location2Id = null) {
 
             $entryService = $this->getEntryServiceFromContainer($application);
             $responseService = $this->getResponseServiceFromContainer($application);
             $locationService = $this->getLocationServiceFromContainer($application);
 
-            $location = $locationService->getLocationById($locationId);
-            $years = $entryService->getYearsAvailableByLocation($location);
+            $location1 = $locationService->getLocationById($location1Id);
+            $location2 = null;
+            if ($location2Id) {
+                $location2 = $locationService->getLocationById($location2Id);
+            }
+            $years = $entryService->getYearsAvailableByLocation($location1, $location2);
             return $responseService->createYearsResponse($years);
 
-        });
+        };
+
+        $collection->get('/{location1Id}/years-available', $yearsAvailableRoute);
+        $collection->get('/{location1Id}/{location2Id}/years-both-available', $yearsAvailableRoute);
     }
 
     private function addViewRoute(Application $application, ControllerCollection $collection)

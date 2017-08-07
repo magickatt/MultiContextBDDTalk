@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.compare_locations', ['ngRoute'])
+angular.module('bddTalk.compare_locations', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/compare_locations', {
@@ -9,28 +9,27 @@ angular.module('myApp.compare_locations', ['ngRoute'])
   });
 }])
 
-.controller('CompareLocationsCtrl', ['$scope', 'LocationList', 'LocationYearList', 'EntryList', function($scope, LocationList, LocationYearList, EntryList) {
+.controller('CompareLocationsCtrl', ['$scope', 'LocationList', 'LocationPairYearList', 'LocationPairEntryList', function($scope, LocationList, LocationPairYearList, LocationPairEntryList) {
 
     $scope.locationList = [];
 
     var locations = LocationList.get({}, function() {
-        console.log(locations);
         $scope.locationList = locations.data;
     });
 
     $scope.onLocationChange = function () {
-        $scope.selectedYearFrom = null;
-        $scope.selectedYearTo = null;
-        $scope.entries = [];
-        var years = LocationYearList.get({ id: $scope.selectedLocation }, function() {
-            console.log(years);
-            $scope.yearList = years.data;
-        });
+        if ($scope.selectedLocation1 !== null && $scope.selectedLocation2 !== null) {
+            var years = LocationPairYearList.get({ id1: $scope.selectedLocation1, id2: $scope.selectedLocation2 }, function() {
+                $scope.yearList = years.data;
+            });
+        } else {
+            $scope.yearList = [];
+        }
     };
 
     $scope.onYearChange = function() {
-        if ($scope.selectedYearFrom !== null || $scope.selectedYearTo !== null && $scope.selectedYearTo >= $scope.selectedYearFrom) {
-            var entries = EntryList.get({ id: $scope.selectedLocation, yearFrom: $scope.selectedYearFrom, yearTo: $scope.selectedYearTo}, function() {
+        if ($scope.selectedLocation1 !== null && $scope.selectedLocation2 !== null) {
+            var entries = LocationPairEntryList.get({ id1: $scope.selectedLocation1, id2: $scope.selectedLocation2, year: $scope.selectedYear}, function() {
                 $scope.entries = entries;
             });
         }

@@ -1,15 +1,15 @@
 'use strict';
 
-// var hostname = 'localhost:9999';
+//var hostname = 'localhost:9999';
 var hostname = 'backend';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
+angular.module('bddTalk', [
   'ngRoute',
   'ngResource',
-  'myApp.compare_years',
-  'myApp.compare_locations',
-  'myApp.version'
+  'bddTalk.compare_years',
+  'bddTalk.compare_locations',
+  'bddTalk.version'
 ]).
 
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
@@ -34,8 +34,16 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     return $resource("http://" + hostname + "/locations/:id/years-available");
 })
 
+.factory("LocationPairYearList", function($resource) {
+    return $resource("http://" + hostname + "/locations/:id1/:id2/years-both-available");
+})
+
 .factory("EntryList", function($resource) {
     return $resource("http://" + hostname + "/entries/:id/:yearFrom/:yearTo");
+})
+
+.factory("LocationPairEntryList", function($resource) {
+    return $resource("http://" + hostname + "/entries/:id1/:id2/:year/compare");
 })
 
 // https://stackoverflow.com/a/21482265

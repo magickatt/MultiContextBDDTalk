@@ -33,6 +33,14 @@ class EntryService
         return $this->getEntries($location, $yearFrom, $yearTo);
     }
 
+    public function getEntryListByLocationPairAndYear(Location $location1, Location $location2, int $year)
+    {
+        $location1Collection = $this->getEntries($location1, $year);
+        $location2Collection = $this->getEntries($location2, $year);
+
+        return $location1Collection->merge($location2Collection);
+    }
+
     private function getEntries(Location $location = null, int $yearFrom = null, int $yearTo = null):EntryCollection
     {
         $queryBuilder = $this->createQueryBuilder($this->entityManager);
@@ -55,11 +63,17 @@ class EntryService
         return $this->createCollection($queryBuilder->getQuery());
     }
 
-    public function getYearsAvailableByLocation(Location $location)
+    public function getYearsAvailableByLocation(Location $location, Location $additionalLocation = null)
     {
         $sql = 'SELECT DISTINCT year FROM entries WHERE location = :location';
+        if ($additionalLocation) {
+            $sql .= ' INTERSECT SELECT DISTINCT year FROM entries WHERE location = :additionalLocation';
+        }
         $statement = $this->entityManager->getConnection()->prepare($sql);
         $statement->bindValue('location', $location->getId());
+        if ($additionalLocation) {
+            $statement->bindValue('additionalLocation', $additionalLocation->getId());
+        }
         $statement->execute();
         return new YearCollection($statement->fetchAll(\PDO::FETCH_COLUMN));
     }
