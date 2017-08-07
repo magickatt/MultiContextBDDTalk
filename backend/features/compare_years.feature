@@ -1,9 +1,16 @@
 Feature: Compare 2 years of historical metereological data for a given location
 
-  Scenario: Check the dropdown contains the expected locations
+  Scenario Outline: Check the dropdown contains the expected locations
     Given I am on the "year comparison" page
     When I look in the list of locations
-    Then I should find "Heathrow Airport" in the those locations
+    Then I should find "<location>" in the those locations
+
+    Examples:
+    | location           |
+    |  Heathrow Airport  |
+    |  Oxford            |
+    |  Durham            |
+    |  Sheffield         |
 
 #  Scenario: Check the dropdown contains the expected locations
 #    Given I am on the "year comparison" page

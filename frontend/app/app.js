@@ -1,5 +1,8 @@
 'use strict';
 
+var hostname = 'localhost:9999';
+//var hostname = 'backend';
+
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
   'ngRoute',
@@ -20,22 +23,22 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 })
 
 .factory("Location", function($resource) {
-    return $resource("http://localhost:9999/locations/:id");
+    return $resource("http://" + hostname + "/locations/:id");
     // return $resource("http://backend/locations/:id");
 })
 
 .factory("LocationList", function($resource) {
-    return $resource("http://localhost:9999/locations/");
+    return $resource("http://" + hostname + "/locations/");
     // return $resource("http://backend/locations/");
 })
 
 .factory("LocationYearList", function($resource) {
-    return $resource("http://localhost:9999/locations/:id/years-available");
+    return $resource("http://" + hostname + "/locations/:id/years-available");
     // return $resource("http://backend/locations/:id/years-available");
 })
 
 .factory("EntryList", function($resource) {
-    return $resource("http://localhost:9999/entries/:id/:yearFrom/:yearTo");
+    return $resource("http://" + hostname + "/entries/:id/:yearFrom/:yearTo");
     // return $resource("http://backend/entries/:id/:yearFrom/:yearTo");
 })
 

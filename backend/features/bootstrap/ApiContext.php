@@ -12,7 +12,10 @@ use PHPUnit\Framework\Assert;
 class ApiContext implements Context
 {
     const LOCATION_NAME_SLUG_MAP = [
-        'Heathrow Airport' => 'heathrow'
+        'Heathrow Airport' => 'heathrow',
+        'Oxford' => 'oxford',
+        'Durham' => 'durham',
+        'Sheffield' => 'sheffield'
     ];
 
     /** @var \Psr\Http\Message\ResponseInterface */
