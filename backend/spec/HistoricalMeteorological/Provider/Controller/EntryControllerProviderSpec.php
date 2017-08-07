@@ -26,6 +26,7 @@ class EntryControllerProviderSpec extends ObjectBehavior
         $collection->get('/{locationId}', Argument::any())->shouldBeCalled();
         $collection->get('/{locationId}/{yearFrom}', Argument::any())->shouldBeCalled();
         $collection->get('/{locationId}/{yearFrom}/{yearTo}', Argument::any())->shouldBeCalled();
+        $collection->get('/{location1Id}/{location2Id}/{year}/compare', Argument::any())->shouldBeCalled();
 
         $this->connect($application);
     }
