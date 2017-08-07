@@ -11,7 +11,6 @@ angular.module('myApp', [
 
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
-
   $routeProvider.otherwise({redirectTo: '/compare_years'});
 }])
 
@@ -21,9 +20,21 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 })
 
 .factory("Location", function($resource) {
-    return $resource("http://localhost:9999/locations/:id");
+    //return $resource("http://localhost:9999/locations/:id");
+    return $resource("http://backend/locations/:id");
 })
 
 .factory("LocationList", function($resource) {
-    return $resource("http://localhost:9999/locations/");
+    //return $resource("http://localhost:9999/locations/");
+    return $resource("http://backend/locations/");
+})
+
+.factory("LocationYearList", function($resource) {
+    //return $resource("http://localhost:9999/locations/:id/years-available");
+    return $resource("http://backend/locations/:id/years-available");
+})
+
+.factory("EntryList", function($resource) {
+    //return $resource("http://localhost:9999/entries/:id/:yearFrom/:yearTo");
+    return $resource("http://backend/entries/:id/:yearFrom/:yearTo");
 });

@@ -46,7 +46,7 @@ class ApiContext implements Context
      */
     public function iLookInTheListOfLocations()
     {
-        $this->response = $this->httpClient->createRequest('/locations');
+        $this->response = $this->httpClient->get('/locations/');
     }
 
     /**

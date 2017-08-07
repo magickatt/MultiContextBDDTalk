@@ -15,3 +15,8 @@ default:
         default:
           selenium2:
             wd_host: "http://localhost:8643/wd/hub"
+    Bex\Behat\ScreenshotExtension:
+      image_drivers:
+        local:
+          screenshot_directory: /var/backend/data/screenshots
+          clear_screenshot_directory: true

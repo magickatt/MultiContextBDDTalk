@@ -4,6 +4,7 @@ namespace HistoricalMeteorological\Service;
 
 use HistoricalMeteorological\Calculator\EntryCollectionSummaryCalculator;
 use HistoricalMeteorological\Calculator\Summary\EntrySummary;
+use HistoricalMeteorological\Collection\YearCollection;
 use HistoricalMeteorological\Transformer\EntrySummaryTransformer;
 use HistoricalMeteorological\Transformer\EntryTransformer;
 use HistoricalMeteorological\Transformer\LocationTransformer;
@@ -35,6 +36,11 @@ class ResponseService
         return new JsonResponse([
             'data' => array_map(array(LocationTransformer::class, 'transformLocationToArray'), $collection->toArray())
         ]);
+    }
+
+    public function createYearsResponse(YearCollection $collection)
+    {
+        return new JsonResponse(['data' => $collection->toArray()]);
     }
 
     public function createLocationResponse(Location $location, int $responseCode = 200)

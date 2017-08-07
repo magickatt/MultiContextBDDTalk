@@ -2,6 +2,7 @@
 
 namespace HistoricalMeteorological\Provider\Controller;
 
+use HistoricalMeteorological\Service\EntryService;
 use Silex\Application;
 use Silex\ControllerCollection;
 use HistoricalMeteorological\Service\LocationService;
@@ -13,6 +14,7 @@ class LocationControllerProvider extends AbstractControllerProvider
     {
         $this->addListRoute($application, $collection);
         $this->addViewRoute($application, $collection);
+        $this->addListYearsAvailableRoute($application, $collection);
         return $collection;
     }
 
@@ -29,6 +31,21 @@ class LocationControllerProvider extends AbstractControllerProvider
         });
     }
 
+    private function addListYearsAvailableRoute(Application $application, ControllerCollection $collection)
+    {
+        $collection->get('/{locationId}/years-available', function (Application $application, $locationId) {
+
+            $entryService = $this->getEntryServiceFromContainer($application);
+            $responseService = $this->getResponseServiceFromContainer($application);
+            $locationService = $this->getLocationServiceFromContainer($application);
+
+            $location = $locationService->getLocationById($locationId);
+            $years = $entryService->getYearsAvailableByLocation($location);
+            return $responseService->createYearsResponse($years);
+
+        });
+    }
+
     private function addViewRoute(Application $application, ControllerCollection $collection)
     {
         $collection->get('/{id}', function (Application $application, $id) {
@@ -40,6 +57,15 @@ class LocationControllerProvider extends AbstractControllerProvider
             return $responseService->createLocationResponse($location);
 
         });
+    }
+
+    /**
+     * @param Application $application
+     * @return EntryService
+     */
+    private function getEntryServiceFromContainer(Application $application):EntryService
+    {
+        return $application['entries'];
     }
 
     /**

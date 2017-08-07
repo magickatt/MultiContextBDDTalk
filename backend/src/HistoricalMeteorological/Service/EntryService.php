@@ -6,6 +6,7 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use HistoricalMeteorological\Collection\EntryCollection;
+use HistoricalMeteorological\Collection\YearCollection;
 use HistoricalMeteorological\Entity\Location;
 
 class EntryService
@@ -52,6 +53,15 @@ class EntryService
         }
 
         return $this->createCollection($queryBuilder->getQuery());
+    }
+
+    public function getYearsAvailableByLocation(Location $location)
+    {
+        $sql = 'SELECT DISTINCT year FROM entries WHERE location = :location';
+        $statement = $this->entityManager->getConnection()->prepare($sql);
+        $statement->bindValue('location', $location->getId());
+        $statement->execute();
+        return new YearCollection($statement->fetchAll(\PDO::FETCH_COLUMN));
     }
 
     private function createCollection(Query $query):EntryCollection

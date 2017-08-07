@@ -1,9 +1,27 @@
 <form>
-<select name="location-dropdown" ng-model="selectedLocation"
-        ng-options="item.id as item.name for item in locationList">
-  <option value="">Select Account</option>
+<select id="location-dropdown" name="location-dropdown" ng-model="selectedLocation"
+        ng-options="item.id as item.name for item in locationList"
+        ng-change="onLocationChange()">
 </select>
+  <select id="year-from-dropdown" name="year-from-dropdown" ng-model="selectedYearFrom"
+          ng-options="item for item in yearList"
+          ng-change="onYearChange()">
+  </select>
+  <select id="year-to-dropdown" name="year-to-dropdown" ng-model="selectedYearTo"
+          ng-options="item for item in yearList"
+          ng-change="onYearChange()">
+  </select>
 </form>
+<table ng-table="entryTable">
+  <tr ng-repeat="entry in entries.data">
+    <td data-title="'Year'">{{entry.year}}</td>
+    <td data-title="'Month'">{{entry.month}}</td>
+    <td data-title="'Rain'">{{entry.rain_volume}}</td>
+    <td data-title="'Sun'">{{entry.sun_duration}}</td>
+    <td data-title="'Temp min'">{{entry.temperature_minimum}}</td>
+    <td data-title="'Temp max'">{{entry.temperature_maximum}}</td>
+  </tr>
+</table>
 <p>
   Showing of 'interpolate' filter:
   {{ 'Current version is v%VERSION%.' | interpolate }}
