@@ -1,28 +1,48 @@
 <form>
-<select id="location-dropdown" name="location-dropdown" ng-model="selectedLocation"
-        ng-options="item.id as item.name for item in locationList"
-        ng-change="onLocationChange()">
-</select>
-  <select id="year-from-dropdown" name="year-from-dropdown" ng-model="selectedYearFrom"
-          ng-options="item for item in yearList"
-          ng-change="onYearChange()">
-  </select>
-  <select id="year-to-dropdown" name="year-to-dropdown" ng-model="selectedYearTo"
-          ng-options="item for item in yearList"
-          ng-change="onYearChange()">
-  </select>
+  <div class="field is-grouped-multiline">
+    <div class="control">
+      <div class="select">
+        <select id="location-dropdown" name="location-dropdown"
+                ng-model="selectedLocation"
+                ng-options="item.id as item.name for item in locationList"
+                ng-change="onLocationChange()">
+        </select>
+      </div>
+      <div class="select">
+        <select id="year-from-dropdown" name="year-from-dropdown"
+                ng-model="selectedYearFrom"
+                ng-options="item for item in yearList"
+                ng-change="onYearChange()">
+        </select>
+      </div>
+      <div class="select">
+        <select id="year-to-dropdown" name="year-to-dropdown"
+                ng-model="selectedYearTo"
+                ng-options="item for item in yearList"
+                ng-change="onYearChange()">
+        </select>
+      </div>
+    </div>
+    <p class="help">Please select the location and year range to display entries in the table.</p>
+  </div>
 </form>
-<table ng-table="entryTable">
+<table class="table" ng-table="entryTable">
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Rain (mm)</th>
+      <th>Sun (hrs)</th>
+      <th>Temp min (c)</th>
+      <th>Temp max (c)</th>
+    </tr>
+  </thead>
   <tr ng-repeat="entry in entries.data">
     <td data-title="'Year'">{{entry.year}}</td>
-    <td data-title="'Month'">{{entry.month}}</td>
-    <td data-title="'Rain'">{{entry.rain_volume}}</td>
-    <td data-title="'Sun'">{{entry.sun_duration}}</td>
-    <td data-title="'Temp min'">{{entry.temperature_minimum}}</td>
-    <td data-title="'Temp max'">{{entry.temperature_maximum}}</td>
+    <td data-title="'Month'">{{entry.month | month}}</td>
+    <td data-title="'Rain'">{{entry.rain_volume | number: 1}}</td>
+    <td data-title="'Sun'">{{entry.sun_duration | number: 1}}</td>
+    <td data-title="'Temp min'">{{entry.temperature_minimum | number: 1}}</td>
+    <td data-title="'Temp max'">{{entry.temperature_maximum | number: 1}}</td>
   </tr>
 </table>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>

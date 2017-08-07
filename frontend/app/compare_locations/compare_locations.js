@@ -11,7 +11,8 @@ angular.module('myApp.compare_locations', ['ngRoute'])
 
 .controller('CompareLocationsCtrl', ['$scope', 'LocationList', 'LocationYearList', 'EntryList', function($scope, LocationList, LocationYearList, EntryList) {
 
-    $scope.locationList = [{"id":"heathrow","name":"Heathrow Airport","latitude":51.479,"longitude":-0.449,"amsl":25}];
+    // $scope.locationList = [{"id":"heathrow","name":"Heathrow Airport","latitude":51.479,"longitude":-0.449,"amsl":25}];
+    $scope.locationList = [];
 
     var locations = LocationList.get({}, function() {
         console.log(locations);
