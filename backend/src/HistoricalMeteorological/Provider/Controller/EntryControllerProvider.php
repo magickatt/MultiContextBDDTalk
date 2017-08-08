@@ -2,6 +2,8 @@
 
 namespace HistoricalMeteorological\Provider\Controller;
 
+use HistoricalMeteorological\Collection\Summary\EntryAggregateSummaryCollection;
+use HistoricalMeteorological\Collection\Summary\EntryComparisonSummaryCollection;
 use Silex\Application;
 use Silex\ControllerCollection;
 use HistoricalMeteorological\Service\EntryService;
@@ -27,7 +29,7 @@ class EntryControllerProvider extends AbstractControllerProvider
             $responseService = $this->getResponseServiceFromContainer($application);
 
             $entries = $entryService->getEntryList();
-            return $responseService->createEntryCollectionResponse($entries);
+            return $responseService->createEntryAggregateSummaryCollectionResponse(new EntryAggregateSummaryCollection($entries));
 
         });
     }
@@ -42,7 +44,7 @@ class EntryControllerProvider extends AbstractControllerProvider
 
             $location = $locationService->getLocationById($locationId);
             $entries = $entryService->getEntryListByLocation($location);
-            return $responseService->createEntryCollectionResponse($entries);
+            return $responseService->createEntryAggregateSummaryCollectionResponse(new EntryAggregateSummaryCollection($entries));
 
         });
     }
@@ -57,7 +59,7 @@ class EntryControllerProvider extends AbstractControllerProvider
 
             $location = $locationService->getLocationById($locationId);
             $entries = $entryService->getEntryListByLocationAndYearRange($location, (int)$yearFrom, (!is_null($yearTo) ? (int)$yearTo : (int)$yearFrom));
-            return $responseService->createEntryCollectionResponse($entries);
+            return $responseService->createEntryAggregateSummaryCollectionResponse(new EntryAggregateSummaryCollection($entries));
 
         };
 
@@ -75,8 +77,11 @@ class EntryControllerProvider extends AbstractControllerProvider
 
             $location1 = $locationService->getLocationById($location1Id);
             $location2 = $locationService->getLocationById($location2Id);
-            $entries = $entryService->getEntryListByLocationPairAndYear($location1, $location2, (int)$year);
-            return $responseService->createEntryCollectionResponse($entries);
+            $comparisonCollection = new EntryComparisonSummaryCollection(
+                $entryService->getEntryListByLocationAndYearRange($location1, (int)$year),
+                $entryService->getEntryListByLocationAndYearRange($location2, (int)$year)
+            );
+            return $responseService->createEntryComparisonSummaryCollectionResponse($comparisonCollection);
 
         };
 

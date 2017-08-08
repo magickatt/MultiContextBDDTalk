@@ -4,6 +4,8 @@ namespace HistoricalMeteorological\Service;
 
 use HistoricalMeteorological\Calculator\EntryCollectionSummaryCalculator;
 use HistoricalMeteorological\Calculator\Summary\EntrySummary;
+use HistoricalMeteorological\Collection\Summary\EntryAggregateSummaryCollection;
+use HistoricalMeteorological\Collection\Summary\EntryComparisonSummaryCollection;
 use HistoricalMeteorological\Collection\YearCollection;
 use HistoricalMeteorological\Transformer\EntrySummaryTransformer;
 use HistoricalMeteorological\Transformer\EntryTransformer;
@@ -20,13 +22,27 @@ class ResponseService
         'Access-Control-Allow-Origin' => '*'
     ];
 
-    public function createEntryCollectionResponse(EntryCollection $collection)
+    public function createEntryAggregateSummaryCollectionResponse(EntryAggregateSummaryCollection $summaryCollection)
     {
+        $collection = $summaryCollection->getCollection();
         $summary = EntryCollectionSummaryCalculator::summariseEntryCollection($collection, new EntrySummary());
 
         return new JsonResponse([
             'data' => array_map(array(EntryTransformer::class, 'transformEntryToArray'), $collection->toArray()),
-            'meta' => EntrySummaryTransformer::transformEntryToArray($summary),
+            'meta' => EntrySummaryTransformer::transformEntrySummaryToArray($summary),
+            'links' => []
+        ]);
+    }
+
+    public function createEntryComparisonSummaryCollectionResponse(EntryComparisonSummaryCollection $comparisonCollection)
+    {
+        $collection1 = $comparisonCollection->getFirstCollection();
+        $collection2 = $comparisonCollection->getSecondCollection();
+        $summaryComparison = EntryCollectionSummaryCalculator::compareEntryCollections($collection1, $collection2);
+
+        return new JsonResponse([
+            'data' => array_map(array(EntryTransformer::class, 'transformEntryToArray'), $collection1->merge($collection2)->toArray()),
+            'meta' => EntrySummaryTransformer::transformEntrySummaryComparisonToArray($summaryComparison),
             'links' => []
         ]);
     }

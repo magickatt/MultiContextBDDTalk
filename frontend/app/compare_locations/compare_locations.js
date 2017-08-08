@@ -11,13 +11,18 @@ angular.module('bddTalk.compare_locations', ['ngRoute'])
 
 .controller('CompareLocationsCtrl', ['$scope', 'LocationList', 'LocationPairYearList', 'LocationPairEntryList', function($scope, LocationList, LocationPairYearList, LocationPairEntryList) {
 
+    $scope.entries = [];
+    $scope.comparisons = [];
     $scope.locationList = [];
+    $scope.yearList = [];
 
     var locations = LocationList.get({}, function() {
         $scope.locationList = locations.data;
     });
 
     $scope.onLocationChange = function () {
+        $scope.entries = [];
+        $scope.comparisons = [];
         if ($scope.selectedLocation1 !== null && $scope.selectedLocation2 !== null) {
             var years = LocationPairYearList.get({ id1: $scope.selectedLocation1, id2: $scope.selectedLocation2 }, function() {
                 $scope.yearList = years.data;
@@ -30,7 +35,8 @@ angular.module('bddTalk.compare_locations', ['ngRoute'])
     $scope.onYearChange = function() {
         if ($scope.selectedLocation1 !== null && $scope.selectedLocation2 !== null) {
             var entries = LocationPairEntryList.get({ id1: $scope.selectedLocation1, id2: $scope.selectedLocation2, year: $scope.selectedYear}, function() {
-                $scope.entries = entries;
+                $scope.entries = entries.data;
+                $scope.comparisons = entries.meta;
             });
         }
     }

@@ -26,7 +26,15 @@
     <p class="help">Please select both locations to compare for which year to display entries in the table.</p>
   </div>
 </form>
-<table class="table" ng-table="entryTable">
+<div class="content" ng-hide="comparisons.length == 0">
+  <ul>
+    <li>Rain Volume difference: <span id="average-rain-volume">{{comparisons.differences.rain_volume}}</span>mm</li>
+    <li>Sun Duration difference: <span id="average-sun-duration">{{comparisons.differences.sun_duration}}</span> hours</li>
+    <li>Temperature Minimum difference: <span id="average-temperature-minimum">{{comparisons.differences.temperature_minimum}}</span>&#8451;</li>
+    <li>Temperature Maximum difference: <span id="average-temperature-maximum">{{comparisons.differences.temperature_maximum}}</span>&#8451;</li>
+  </ul>
+</div>
+<table class="table" ng-table="entryTable" ng-hide="entries.length == 0">
   <thead>
   <tr>
     <th>Location</th>
@@ -37,7 +45,7 @@
     <th>Temp max (c)</th>
   </tr>
   </thead>
-  <tr ng-repeat="entry in entries.data">
+  <tr ng-repeat="entry in entries">
     <td data-title="'Year'">{{entry.location}}</td>
     <td data-title="'Month'">{{entry.month | month}}</td>
     <td data-title="'Rain'">{{entry.rain_volume | number: 1}}</td>

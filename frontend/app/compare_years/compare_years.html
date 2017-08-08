@@ -26,7 +26,16 @@
         <p class="help">Please select the location and year range to display entries in the table.</p>
     </div>
 </form>
-<table class="table" ng-table="entryTable">
+<div class="content" ng-hide="aggregates.length == 0">
+    <ul>
+        <li>Average Rain Volume: <span id="average-rain-volume">{{aggregates.averages.rain_volume}}</span>mm</li>
+        <li>Average Sun Duration: <span id="average-sun-duration">{{aggregates.averages.sun_duration}}</span> hours</li>
+        <li>Average Temperature Minimum: <span id="average-temperature-minimum">{{aggregates.averages.temperature_minimum}}</span>&#8451;</li>
+        <li>Average Temperature Maximum: <span id="average-temperature-maximum">{{aggregates.averages.temperature_maximum}}</span>&#8451;</li>
+
+    </ul>
+</div>
+<table class="table" ng-table="entryTable" ng-hide="entries.length == 0">
     <thead>
     <tr>
         <th>Year</th>
@@ -37,13 +46,13 @@
         <th>Temp max (c)</th>
     </tr>
     </thead>
-    <tr ng-repeat="entry in entries.data">
+    <tr ng-repeat="entry in entries">
         <td data-title="'Year'">{{entry.year}}</td>
         <td data-title="'Month'">{{entry.month | month}}</td>
         <td data-title="'Rain'">{{entry.rain_volume | number: 1}}</td>
         <td data-title="'Sun'">{{entry.sun_duration | number: 1}}</td>
-        <td data-title="'Temp min'">{{entry.temperature_minimum | number: 1}}</td>
-        <td data-title="'Temp max'">{{entry.temperature_maximum | number: 1}}</td>
+        <td data-title="'Temp Min'">{{entry.temperature_minimum | number: 1}}</td>
+        <td data-title="'Temp Max'">{{entry.temperature_maximum | number: 1}}</td>
     </tr>
 </table>
 

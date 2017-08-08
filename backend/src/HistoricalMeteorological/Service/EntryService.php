@@ -33,14 +33,6 @@ class EntryService
         return $this->getEntries($location, $yearFrom, $yearTo);
     }
 
-    public function getEntryListByLocationPairAndYear(Location $location1, Location $location2, int $year)
-    {
-        $location1Collection = $this->getEntries($location1, $year);
-        $location2Collection = $this->getEntries($location2, $year);
-
-        return $location1Collection->merge($location2Collection);
-    }
-
     private function getEntries(Location $location = null, int $yearFrom = null, int $yearTo = null):EntryCollection
     {
         $queryBuilder = $this->createQueryBuilder($this->entityManager);
