@@ -1,7 +1,7 @@
 'use strict';
 
-var hostname = 'localhost:9999';
-//var hostname = 'backend';
+//var hostname = 'localhost:9999';
+var hostname = 'backend';
 
 // Declare app level module which depends on views, and components
 angular.module('bddTalk', [

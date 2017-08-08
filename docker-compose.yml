@@ -25,7 +25,7 @@ services:
       resources:
         limits:
           cpus: "0.1"
-          memory: 32M
+          memory: 64M
       restart_policy:
         condition: on-failure
       # Normally you would use a container registry to store a fully built copy of your application, but since
@@ -33,7 +33,7 @@ services:
       # anywhere but on the Docker Swarm master (i.e. this computer, where the local directory exists)
       placement:
         constraints: [node.role == manager]
-    # Forward port 80 (HTTP default) to port 80 in the containers
+    # Forward port 8888 to port 80 in the containers
     ports:
       - "8888:80"
     networks:
@@ -62,13 +62,13 @@ services:
       resources:
         limits:
           cpus: "0.1"
-          memory: 64M
+          memory: 256M
       restart_policy:
         condition: on-failure
       # Docker Swarm restriction, see notes above
       placement:
         constraints: [node.role == manager]
-    # Forward port 9080 to port 80 (HTTP default) in the containers, must be listening on a different port to the
+    # Forward port 9999 to port 80 (HTTP default) in the containers, must be listening on a different port to the
     # front-end containers because the Angular application is being served from port 80 on every Docker Swarm node,
     # therefore the Angular application will talk to the REST API using port 9080 in this demonstration. This is only
     # required in this case because we are re-using localhost to serve both applications.
@@ -94,7 +94,7 @@ services:
       resources:
         limits:
           cpus: "0.1"
-          memory: 128M
+          memory: 256M
       restart_policy:
         condition: on-failure
       # Docker Swarm restriction, see notes above

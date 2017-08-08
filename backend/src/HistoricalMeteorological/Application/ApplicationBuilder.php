@@ -102,6 +102,7 @@ class ApplicationBuilder
     {
         return $application->register(new DoctrineOrmServiceProvider(), array(
             'orm.proxies_dir' => __DIR__.'/../../../data/proxies',
+            'orm.auto_generate_proxies' => true,
             'orm.em.options' => [
                 'mappings' => [
                     [
@@ -110,6 +111,10 @@ class ApplicationBuilder
                         'path' => __DIR__.'/src/HistoricalMeteorological/Entity',
                     ]
                 ],
+                'default_cache' => [
+                    'driver' => 'filesystem',
+                    'path' => __DIR__.'/../../../data/cache',
+                ]
             ],
         ));
     }
