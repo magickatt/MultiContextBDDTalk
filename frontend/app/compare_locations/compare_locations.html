@@ -2,14 +2,14 @@
   <div class="field is-grouped-multiline">
     <div class="control">
       <div class="select">
-        <select id="location1-dropdown" name="location1-dropdown"
+        <select id="location-dropdown" name="location-dropdown"
                 ng-model="selectedLocation1"
                 ng-options="item.id as item.name for item in locationList"
                 ng-change="onLocationChange()">
         </select>
       </div>
       <div class="select">
-        <select id="location2-dropdown" name="location2-dropdown"
+        <select id="additional-location-dropdown" name="additional-location-dropdown"
                 ng-model="selectedLocation2"
                 ng-options="item.id as item.name for item in locationList"
                 ng-change="onLocationChange()">

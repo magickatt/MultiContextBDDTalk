@@ -60,4 +60,49 @@ class FrontendContext extends MinkContext
 
         $this->selectOption('location-dropdown', $name);
     }
+
+    /**
+     * @When I want to compare data for :name between :yearFrom and :yearTo
+     */
+    public function iWantToCompareDataForBetweenAnd($name, $yearFrom, $yearTo)
+    {
+        $this->selectOption('location-dropdown', $name);
+        $this->selectOption('year-from-dropdown', $yearFrom);
+        $this->selectOption('year-to-dropdown', $yearTo);
+
+        // Need to replace this with a spin
+        sleep(1);
+    }
+
+    /**
+     * @Then I will know that the average rain volume is :rainVolume millimetres
+     */
+    public function iWillKnowThatTheAverageRainVolumeIs($rainVolume)
+    {
+        $this->assertElementContains('#average-rain-volume', $rainVolume);
+    }
+
+    /**
+     * @Then I will know that the average sun duration is :days days
+     */
+    public function iWillKnowThatTheAverageSunDurationIs($days)
+    {
+        $this->assertElementContains('#average-sun-duration', $days);
+    }
+
+    /**
+     * @Then I will know that the average minimum temperature is :averageMinimumTemperature degrees
+     */
+    public function iWillKnowThatTheAverageMinimumTemperatureIs($averageMinimumTemperature)
+    {
+        $this->assertElementContains('#average-temperature-minimum', $averageMinimumTemperature);
+    }
+
+    /**
+     * @Then I will know that the average maximum temperature is :averageMaximumTemperature degrees
+     */
+    public function iWillKnowThatTheAverageMaximumTemperatureIs($averageMaximumTemperature)
+    {
+        $this->assertElementContains('#average-temperature-maximum', $averageMaximumTemperature);
+    }
 }
