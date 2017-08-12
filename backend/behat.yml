@@ -3,7 +3,7 @@ default:
     api:
       contexts:
       - ApiContext:
-        - "http://backend"
+        - "http://backend:9999"
     frontend:
       contexts:
       - FrontendContext:

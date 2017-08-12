@@ -73,7 +73,7 @@ services:
     # therefore the Angular application will talk to the REST API using port 9080 in this demonstration. This is only
     # required in this case because we are re-using localhost to serve both applications.
     ports:
-      - "9999:80"
+      - "9999:9999"
     networks:
       - default
 

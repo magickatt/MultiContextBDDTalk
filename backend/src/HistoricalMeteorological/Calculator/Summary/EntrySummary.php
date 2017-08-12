@@ -6,6 +6,11 @@ use HistoricalMeteorological\Entity\Entry;
 
 class EntrySummary
 {
+    const TEMPERATURE_MAXIMUM = 'temperature_maximum';
+    const TEMPERATURE_MINIMUM = 'temperature_maximum';
+    const RAIN_VOLUME = 'temperature_maximum';
+    const SUN_DURATION = 'temperature_maximum';
+
     /** @var float */
     private $totalTemperatureMaximum = 0;
 
@@ -19,19 +24,22 @@ class EntrySummary
     private $totalSunDuration = 0;
 
     /** @var int */
-    private $count = 0;
+    private $counts = [
+        self::TEMPERATURE_MAXIMUM => 0,
+        self::TEMPERATURE_MINIMUM => 0,
+        self::RAIN_VOLUME => 0,
+        self::SUN_DURATION => 0,
+    ];
 
     /**
      * @param Entry $entry
      */
     public function addEntry(Entry $entry)
     {
-        $this->totalTemperatureMaximum += $entry->getTemperatureMaximum();
-        $this->totalTemperatureMinimum += $entry->getTemperatureMinimum();
-        $this->totalRainVolume += $entry->getRainVolume();
-        $this->totalSunDuration += $entry->getSunDuration();
-
-        $this->count++;
+        $this->addTemperatureMaximum($entry);
+        $this->addTemperatureMinimum($entry);
+        $this->addRainVolume($entry);
+        $this->addSunDuration($entry);
     }
 
     public function getTotalRainVolume()
@@ -46,33 +54,65 @@ class EntrySummary
 
     public function getAverageTemperatureMaximum()
     {
-        if ($this->count === 0) {
+        if ($this->counts[self::TEMPERATURE_MAXIMUM] === 0) {
             return null;
         }
-        return $this->totalTemperatureMaximum / $this->count;
+        return $this->totalTemperatureMaximum / $this->counts[self::TEMPERATURE_MAXIMUM];
     }
 
     public function getAverageTemperatureMinimum()
     {
-        if ($this->count === 0) {
+        if ($this->counts[self::TEMPERATURE_MINIMUM] === 0) {
             return null;
         }
-        return $this->totalTemperatureMinimum / $this->count;
+        return $this->totalTemperatureMinimum / $this->counts[self::TEMPERATURE_MINIMUM];
     }
 
     public function getAverageRainVolume()
     {
-        if ($this->count === 0) {
+        if ($this->counts[self::RAIN_VOLUME] === 0) {
             return null;
         }
-        return $this->totalRainVolume / $this->count;
+        return $this->totalRainVolume / $this->counts[self::RAIN_VOLUME];
     }
 
     public function getAverageSunDuration()
     {
-        if ($this->count === 0) {
+        if ($this->counts[self::SUN_DURATION] === 0) {
             return null;
         }
-        return $this->totalSunDuration / $this->count;
+        return $this->totalSunDuration / $this->counts[self::SUN_DURATION];
+    }
+
+    private function addTemperatureMaximum(Entry $entry)
+    {
+        if ($entry->hasTemperatureMaximum()) {
+            $this->totalTemperatureMaximum += $entry->getTemperatureMaximum();
+            $this->counts[self::TEMPERATURE_MAXIMUM]++;
+        }
+    }
+
+    private function addTemperatureMinimum(Entry $entry)
+    {
+        if ($entry->hasTemperatureMinimum()) {
+            $this->totalTemperatureMinimum += $entry->getTemperatureMinimum();
+            $this->counts[self::TEMPERATURE_MINIMUM]++;
+        }
+    }
+
+    private function addRainVolume(Entry $entry)
+    {
+        if ($entry->hasRainVolume()) {
+            $this->totalRainVolume += $entry->getRainVolume();
+            $this->counts[self::RAIN_VOLUME]++;
+        }
+    }
+
+    private function addSunDuration(Entry $entry)
+    {
+        if ($entry->hasSunDuration()) {
+            $this->totalSunDuration += $entry->getSunDuration();
+            $this->counts[self::SUN_DURATION]++;
+        }
     }
 }

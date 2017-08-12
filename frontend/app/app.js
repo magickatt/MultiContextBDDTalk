@@ -1,9 +1,9 @@
 'use strict';
 
-//var hostname = 'localhost:9999';
-var hostname = 'backend';
+// Hostname of the REST API
+var hostname = 'backend:9999';
 
-// Declare app level module which depends on views, and components
+// Declare application-level module which depends on views, and components
 angular.module('bddTalk', [
   'ngRoute',
   'ngResource',
@@ -12,6 +12,7 @@ angular.module('bddTalk', [
   'bddTalk.version'
 ]).
 
+// Default routing
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
   $routeProvider.otherwise({redirectTo: '/compare_years'});
@@ -22,26 +23,32 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     $resourceProvider.defaults.stripTrailingSlashes = false;
 })
 
+// Information about a specific location
 .factory("Location", function($resource) {
     return $resource("http://" + hostname + "/locations/:id");
 })
 
+// List of all locations
 .factory("LocationList", function($resource) {
     return $resource("http://" + hostname + "/locations/");
 })
 
+// Years that a location will have entries available for
 .factory("LocationYearList", function($resource) {
     return $resource("http://" + hostname + "/locations/:id/years-available");
 })
 
+// Year that a pair of locations will be have entries available for
 .factory("LocationPairYearList", function($resource) {
     return $resource("http://" + hostname + "/locations/:id1/:id2/years-both-available");
 })
 
+// List of entries for a specific location between a date range
 .factory("EntryList", function($resource) {
     return $resource("http://" + hostname + "/entries/:id/:yearFrom/:yearTo");
 })
 
+// List of entries for a pair of locations for a specific year
 .factory("LocationPairEntryList", function($resource) {
     return $resource("http://" + hostname + "/entries/:id1/:id2/:year/compare");
 })

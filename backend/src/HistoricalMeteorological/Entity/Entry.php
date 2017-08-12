@@ -156,6 +156,17 @@ class Entry
     }
 
     /**
+     * @return bool
+     */
+    public function hasTemperatureMaximum()
+    {
+        if (!empty($this->temperatureMaximum)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * @return float
      */
     public function getTemperatureMaximum()
@@ -171,6 +182,17 @@ class Entry
     {
         $this->temperatureMaximum = $temperatureMaximum;
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTemperatureMinimum()
+    {
+        if (!empty($this->temperatureMaximum)) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -192,6 +214,17 @@ class Entry
     }
 
     /**
+     * @return bool
+     */
+    public function hasRainVolume()
+    {
+        if (!empty($this->rainVolume)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * @return float
      */
     public function getRainVolume()
@@ -207,6 +240,17 @@ class Entry
     {
         $this->rainVolume = $rainVolume;
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasSunDuration()
+    {
+        if (!empty($this->sunDuration)) {
+            return true;
+        }
+        return false;
     }
 
     /**

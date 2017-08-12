@@ -20,12 +20,21 @@ For this demo to work you'll need [Docker installed](https://docs.docker.com/eng
 You should see the following output if this works successfully
 
     Creating network bddtalk_default
+    Creating service bddtalk_testrunner
     Creating service bddtalk_frontend
     Creating service bddtalk_backend
 
 ### Use the application
 
-The container running the single page JavaScript application should be available locally on port 8888
+#### Add a host entry
+
+Because the behavioural tests rely on internal DNS within the Docker Swarm, you will need a local hosts file entry to point the Angular application at the REST API
+
+    127.0.0.1 backend
+
+#### Accessing the applications
+
+The container running the single page JavaScript application should be available locally on port 8888 (which is forwarded to port 80 in the container)
 
 [http://localhost:8888](http://localhost:8888)
 
@@ -37,12 +46,17 @@ The container running the REST API should display ~~Swagger~~ Open API documenta
 
 There are scripts to run the tests within their respective containers. If these are non-executable you'll need to allow them to be run
     
-    chmod +x *.sh
+    chmod +x bdd-tests.sh
 
 #### Behavioural tests
 
-#### Unit and Integration tests
+There is a shortcut script provided which will determine which container is the test runner then run the Behat tests on it
 
-    ./backend_tests.sh
+    ./bdd-tests.sh
+
+#### Unit and Integration tests
+	
+    cd backend && bin/phpspec run && cd -
+    cd backend && bin/phpunit --coverage-php data/coverage/phpunit_coverage.cov && cd -
 
 
