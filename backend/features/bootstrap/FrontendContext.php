@@ -9,6 +9,8 @@ use PHPUnit\Framework\Assert;
 
 class FrontendContext extends MinkContext
 {
+    const FRONTEND_DECIMAL_PLACES = 1;
+
     const NAME_TO_URI_MAP = [
         'year comparison' => '#!/compare_years',
         'location comparison' => '#!/compare_locations'
@@ -34,11 +36,15 @@ class FrontendContext extends MinkContext
     /**
      * @When I want to compare data for :name between :yearFrom and :yearTo
      */
-    public function iWantToCompareDataForBetweenAnd($name, $yearFrom, $yearTo)
+    public function iWantToCompareDataForBetweenAnd($locationName, $yearFrom, $yearTo)
     {
         // Select the location and the date range from the dropdowns on the page
-        $this->selectOption('location-dropdown', $name);
+        $this->selectOption('location-dropdown', $locationName);
         $this->selectOption('year-from-dropdown', $yearFrom);
+
+        // Need to replace this with a spin
+        sleep(1);
+
         $this->selectOption('year-to-dropdown', $yearTo);
 
         // Need to replace this with a spin
@@ -50,7 +56,10 @@ class FrontendContext extends MinkContext
      */
     public function iWillKnowThatTheAverageRainVolumeIs($rainVolume)
     {
-        $this->assertElementContains('#average-rain-volume', number_format($rainVolume, 1));
+        $this->assertElementContains(
+            '#average-rain-volume',
+            $this->roundNumberForFrontend($rainVolume)
+        );
     }
 
     /**
@@ -58,7 +67,10 @@ class FrontendContext extends MinkContext
      */
     public function iWillKnowThatTheAverageSunDurationIs($days)
     {
-        $this->assertElementContains('#average-sun-duration', number_format($days, 1));
+        $this->assertElementContains(
+            '#average-sun-duration',
+            $this->roundNumberForFrontend($days)
+        );
     }
 
     /**
@@ -66,7 +78,10 @@ class FrontendContext extends MinkContext
      */
     public function iWillKnowThatTheAverageMinimumTemperatureIs($averageMinimumTemperature)
     {
-        $this->assertElementContains('#average-temperature-minimum', number_format($averageMinimumTemperature, 1));
+        $this->assertElementContains(
+            '#average-temperature-minimum',
+            $this->roundNumberForFrontend($averageMinimumTemperature)
+        );
     }
 
     /**
@@ -74,7 +89,10 @@ class FrontendContext extends MinkContext
      */
     public function iWillKnowThatTheAverageMaximumTemperatureIs($averageMaximumTemperature)
     {
-        $this->assertElementContains('#average-temperature-maximum', number_format($averageMaximumTemperature, 1));
+        $this->assertElementContains(
+            '#average-temperature-maximum',
+            $this->roundNumberForFrontend($averageMaximumTemperature)
+        );
     }
 
     /**
@@ -82,7 +100,13 @@ class FrontendContext extends MinkContext
      */
     public function iWantToCompareDataForAndFor($locationName1, $locationName2, $year)
     {
-        throw new PendingException();
+        // Select the location and the date range from the dropdowns on the page
+        $this->selectOption('location-dropdown', $locationName1);
+        $this->selectOption('additional-location-dropdown', $locationName2);
+        $this->selectOption('year-dropdown', $year);
+
+        // Need to replace this with a spin
+        sleep(1);
     }
 
     /**
@@ -90,7 +114,7 @@ class FrontendContext extends MinkContext
      */
     public function iWillKnowThatTheDifferenceInAverageRainVolumeIsMillimetres($diffAverageRainVolume)
     {
-        throw new PendingException();
+        $this->assertElementContains('#difference-average-rain-volume', $this->roundNumberForFrontend($diffAverageRainVolume));
     }
 
     /**
@@ -98,7 +122,7 @@ class FrontendContext extends MinkContext
      */
     public function iWillKnowThatTheDifferenceInAverageSunDurationIsDays($diffAverageSunDuration)
     {
-        throw new PendingException();
+        $this->assertElementContains('#difference-average-sun-duration', $this->roundNumberForFrontend($diffAverageSunDuration));
     }
 
     /**
@@ -106,7 +130,7 @@ class FrontendContext extends MinkContext
      */
     public function iWillKnowThatTheDifferenceInAverageMinimumTemperatureIsDegrees($diffAverageMinimumTemperature)
     {
-        throw new PendingException();
+        $this->assertElementContains('#difference-average-temperature-minimum', $this->roundNumberForFrontend($diffAverageMinimumTemperature));
     }
 
     /**
@@ -114,7 +138,7 @@ class FrontendContext extends MinkContext
      */
     public function iWillKnowThatTheDifferenceInAverageMaximumTemperatureIsDegrees($diffAverageMaximumTemperature)
     {
-        throw new PendingException();
+        $this->assertElementContains('#difference-average-temperature-maximum', $this->roundNumberForFrontend($diffAverageMaximumTemperature));
     }
 
     /**
@@ -137,5 +161,18 @@ class FrontendContext extends MinkContext
         Assert::assertArrayHasKey($name, self::NAME_TO_URI_MAP);
 
         return self::NAME_TO_URI_MAP[$name];
+    }
+
+    /**
+     * Round a number the way the front-end will
+     * @param float $number
+     * @return string
+     */
+    private function roundNumberForFrontend($number)
+    {
+        if (round($number, self::FRONTEND_DECIMAL_PLACES) == 0) {
+            return number_format(0, self::FRONTEND_DECIMAL_PLACES);
+        }
+        return number_format($number, self::FRONTEND_DECIMAL_PLACES);
     }
 }

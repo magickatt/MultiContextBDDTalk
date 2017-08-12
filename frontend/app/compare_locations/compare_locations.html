@@ -16,7 +16,7 @@
         </select>
       </div>
       <div class="select">
-        <select id="year-to-dropdown" name="year-to-dropdown"
+        <select id="year-dropdown" name="year-to-dropdown"
                 ng-model="selectedYear"
                 ng-options="item for item in yearList"
                 ng-change="onYearChange()">
@@ -28,10 +28,10 @@
 </form>
 <div class="content" ng-hide="comparisons.length == 0">
   <ul>
-    <li>Rain Volume difference: <span id="average-rain-volume">{{comparisons.differences.rain_volume}}</span>mm</li>
-    <li>Sun Duration difference: <span id="average-sun-duration">{{comparisons.differences.sun_duration}}</span> hours</li>
-    <li>Temperature Minimum difference: <span id="average-temperature-minimum">{{comparisons.differences.temperature_minimum}}</span>&#8451;</li>
-    <li>Temperature Maximum difference: <span id="average-temperature-maximum">{{comparisons.differences.temperature_maximum}}</span>&#8451;</li>
+    <li>Rain Volume difference: <span id="difference-average-rain-volume">{{comparisons.differences.rain_volume | number: 1}}</span> mm</li>
+    <li>Sun Duration difference: <span id="difference-average-sun-duration">{{comparisons.differences.sun_duration | number: 1}}</span> hours</li>
+    <li>Temperature Minimum difference: <span id="difference-average-temperature-minimum">{{comparisons.differences.temperature_minimum | number: 1}}</span>&#8451;</li>
+    <li>Temperature Maximum difference: <span id="difference-average-temperature-maximum">{{comparisons.differences.temperature_maximum | number: 1}}</span>&#8451;</li>
   </ul>
 </div>
 <table class="table" ng-table="entryTable" ng-hide="entries.length == 0">
@@ -46,7 +46,7 @@
   </tr>
   </thead>
   <tr ng-repeat="entry in entries">
-    <td data-title="'Year'">{{entry.location}}</td>
+    <td data-title="'Year'" style="text-transform: capitalize">{{entry.location}}</td>
     <td data-title="'Month'">{{entry.month | month}}</td>
     <td data-title="'Rain'">{{entry.rain_volume | number: 1}}</td>
     <td data-title="'Sun'">{{entry.sun_duration | number: 1}}</td>

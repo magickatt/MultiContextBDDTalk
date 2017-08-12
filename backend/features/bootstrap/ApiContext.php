@@ -61,7 +61,7 @@ class ApiContext implements Context
     public function iWantToCompareDataForBetweenAnd($locationName, $yearFrom, $yearTo)
     {
         $locationId = $this->translateLocationNameToId($locationName);
-        $this->checkLocationsExists($locationId);
+        $this->checkLocationExists($locationId);
 
         $this->response = $this->httpClient->get('/entries/'.$locationId.'/'.$yearFrom.'/'.$yearTo);
     }
@@ -119,7 +119,12 @@ class ApiContext implements Context
      */
     public function iWantToCompareDataForAndFor($locationName1, $locationName2, $year)
     {
-        throw new PendingException();
+        $location1Id = $this->translateLocationNameToId($locationName1);
+        $location2Id = $this->translateLocationNameToId($locationName2);
+        $this->checkLocationExists($location1Id);
+        $this->checkLocationExists($location2Id);
+
+        $this->response = $this->httpClient->get('/entries/'.$location1Id.'/'.$location2Id.'/'.$year.'/compare');
     }
 
     /**
@@ -127,7 +132,11 @@ class ApiContext implements Context
      */
     public function iWillKnowThatTheDifferenceInAverageRainVolumeIsMillimetres($diffAverageRainVolume)
     {
-        throw new PendingException();
+        $meta = $this->getResponseMetadata($this->response);
+
+        Assert::assertArrayHasKey('differences', $meta);
+        Assert::assertArrayHasKey('rain_volume', $meta['differences']);
+        Assert::assertEquals($diffAverageRainVolume, $meta['differences']['rain_volume']);
     }
 
     /**
@@ -135,7 +144,11 @@ class ApiContext implements Context
      */
     public function iWillKnowThatTheDifferenceInAverageSunDurationIsDays($diffAverageSunDuration)
     {
-        throw new PendingException();
+        $meta = $this->getResponseMetadata($this->response);
+
+        Assert::assertArrayHasKey('differences', $meta);
+        Assert::assertArrayHasKey('sun_duration', $meta['differences']);
+        Assert::assertEquals($diffAverageSunDuration, $meta['differences']['sun_duration']);
     }
 
     /**
@@ -143,7 +156,11 @@ class ApiContext implements Context
      */
     public function iWillKnowThatTheDifferenceInAverageMinimumTemperatureIsDegrees($diffAverageMinimumTemperature)
     {
-        throw new PendingException();
+        $meta = $this->getResponseMetadata($this->response);
+
+        Assert::assertArrayHasKey('differences', $meta);
+        Assert::assertArrayHasKey('temperature_minimum', $meta['differences']);
+        Assert::assertEquals($diffAverageMinimumTemperature, $meta['differences']['temperature_minimum']);
     }
 
     /**
@@ -151,7 +168,11 @@ class ApiContext implements Context
      */
     public function iWillKnowThatTheDifferenceInAverageMaximumTemperatureIsDegrees($diffAverageMaximumTemperature)
     {
-        throw new PendingException();
+        $meta = $this->getResponseMetadata($this->response);
+
+        Assert::assertArrayHasKey('differences', $meta);
+        Assert::assertArrayHasKey('temperature_maximum', $meta['differences']);
+        Assert::assertEquals($diffAverageMaximumTemperature, $meta['differences']['temperature_maximum']);
     }
 
     /**
@@ -171,7 +192,7 @@ class ApiContext implements Context
      * Check that a specific location exists in the list of locations
      * @param string $locationId
      */
-    private function checkLocationsExists(string $locationId)
+    private function checkLocationExists(string $locationId)
     {
         $response = $this->httpClient->get('/locations/');
         $locationExistsInResponse = false;

@@ -10,7 +10,7 @@ Feature: Compare historical metereological data of a pair of locations for a giv
 
     Examples:
       | location1    | location2         | year  | diffAvgRain  | diffAvgSun  | diffAvgTempMin  | diffAvgTempMax  |
-      |  Lowestoft   | Heathrow Airport  | 1977  | 50.24    | 129.34  | 6.96        | 14.74       |
-      |  Valle       | Oxford            | 1977  | 50.24    | 129.34  | 6.96        | 14.74       |
-      |  Eastbourne  | Durham            | 1977  | 50.24    | 129.34  | 6.96        | 14.74       |
-      |  Chivenor    | Sheffield         | 1977  | 50.24    | 129.34  | 6.96        | 14.74       |
+      |  Lowestoft   | Heathrow Airport  | 1992  | -1.03        | 11.83       | -0.02           | -1.65           |
+      |  Valley      | Oxford            | 1976  | 15.21        | 4.71        | 0.98            | -1.32           |
+      |  Eastbourne  | Durham            | 1964  | 26.43        | 39.47       | 3.06            | 0.57            |
+      |  Chivenor    | Sheffield         | 1988  | 4.04         | -112.19     | 1.13            | 1.14            |
