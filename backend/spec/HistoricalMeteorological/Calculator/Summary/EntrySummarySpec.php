@@ -82,6 +82,16 @@ class EntrySummarySpec extends ObjectBehavior
         $this->getAverageSunDuration()->shouldReturn(9.6 / 3);
     }
 
+    function it_will_not_provide_averages_if_no_entries_have_been_added()
+    {
+        $this->getTotalRainVolume()->shouldReturn(0);
+        $this->getTotalSunDuration()->shouldReturn(0);
+        $this->getAverageTemperatureMaximum()->shouldReturn(null);
+        $this->getAverageTemperatureMinimum()->shouldReturn(null);
+        $this->getAverageRainVolume()->shouldReturn(null);
+        $this->getAverageSunDuration()->shouldReturn(null);
+    }
+
     /**
      * @param int $id
      * @param int $year

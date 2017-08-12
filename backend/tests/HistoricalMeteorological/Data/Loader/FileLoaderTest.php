@@ -3,6 +3,7 @@
 namespace HistoricalMeteorological\Data\Parser;
 
 use Generator;
+use SeekableIterator;
 use DirectoryIterator;
 use PHPUnit\Framework\Assert;
 use SplFileInfo;
@@ -27,7 +28,7 @@ class FileLoaderTest extends TestCase
     {
         $path = sys_get_temp_dir().'/'.sha1(rand(1, 99999));
         mkdir($path);
-        $this->directory = new \DirectoryIterator($path);
+        $this->directory = new DirectoryIterator($path);
 
         $this->data = [
             $path.'/fileloadertest_'.sha1(rand(1, 1000)) => 'Test Data '.rand(1, 1000),
@@ -41,6 +42,51 @@ class FileLoaderTest extends TestCase
         }
 
         $this->loader = new FileLoader();
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testFilesCannotBeFoundViaNonDirectoryIterator()
+    {
+        $iterator = $this->prophesize(SeekableIterator::class);
+        $this->loader->getResources($iterator->reveal());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testFilesCannotBeFoundIfDirectoryIsNotReadable()
+    {
+        $this->markTestSkipped('Not working');
+
+        $directory = $this->createMock(DirectoryIterator::class);
+        $directory->method('isDir')->willReturn(false);
+        $directory->method('isReadable')->willReturn(true);
+
+        $this->loader->getResources($directory);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testFilesCannotBeFoundIfDirectoryIsNotActuallyDirectory()
+    {
+        $this->markTestSkipped('Not working');
+
+        $directory = $this->createMock(DirectoryIterator::class);
+        $directory->method('isDir')->willReturn(false);
+        $directory->method('isReadable')->willReturn(true);
+
+        $this->loader->getResources($directory);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testRowsCannotBeLoadedViaNonSplFileInfo()
+    {
+        $this->loader->getRows('something');
     }
 
     public function testRowsWillBeLoadedAsGenerator()

@@ -17,8 +17,10 @@ class EntrySpec extends ObjectBehavior
         $this->setLocation($location)->shouldReturn($this);
         $this->getLocation()->shouldReturn($location);
 
+        $this->hasYear()->shouldReturn(false);
         $this->setYear(1993)->shouldReturn($this);
         $this->getYear()->shouldReturn(1993);
+        $this->hasYear()->shouldReturn(true);
 
         $this->setMonth(11)->shouldReturn($this);
         $this->getMonth()->shouldReturn(11);
