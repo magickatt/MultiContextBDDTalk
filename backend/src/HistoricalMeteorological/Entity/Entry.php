@@ -56,6 +56,40 @@ class Entry
     private $sunDuration;
 
     /**
+     * @param int $id
+     * @param Location $location
+     * @param int $year
+     * @param int $month
+     * @param float $temperatureMaximum
+     * @param float $temperatureMinimum
+     * @param float $rainVolume
+     * @param float $sunDuration
+     *
+     * @return Entry
+     */
+    public function hydrate(
+        int $id,
+        Location $location,
+        int $year,
+        int $month,
+        float $temperatureMaximum,
+        float $temperatureMinimum,
+        float $rainVolume,
+        float $sunDuration
+    ) {
+        $this->id = $id;
+        $this->location = $location;
+        $this->year = $year;
+        $this->month = $month;
+        $this->temperatureMinimum = $temperatureMinimum;
+        $this->temperatureMaximum = $temperatureMaximum;
+        $this->rainVolume = $rainVolume;
+        $this->sunDuration = $sunDuration;
+
+        return $this;
+    }
+
+    /**
      * @return Location
      */
     public function getLocation()

@@ -40,6 +40,30 @@ class Location
     private $distanceAboveMeanSeaLevel;
 
     /**
+     * @param string $id
+     * @param string $name
+     * @param float $latitude
+     * @param float $longitude
+     * @param int $distanceAboveMeanSeaLevel
+     * @return Location
+     */
+    public function hydrate(
+        string $id,
+        string $name,
+        float $latitude,
+        float $longitude,
+        int $distanceAboveMeanSeaLevel
+    ) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+        $this->distanceAboveMeanSeaLevel = $distanceAboveMeanSeaLevel;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getId():string

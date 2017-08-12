@@ -10,9 +10,9 @@ use Prophecy\Argument;
 
 class EntrySpec extends ObjectBehavior
 {
-    function it_should_be_able_to_save_and_retrieve_information(Location $location)
+    function it_should_be_able_to_save_and_retrieve_information()
     {
-        throw new SkippingException('Annotation errors');
+        $location = LocationSpec::createLocation();
 
         $this->setLocation($location)->shouldReturn($this);
         $this->getLocation()->shouldReturn($location);

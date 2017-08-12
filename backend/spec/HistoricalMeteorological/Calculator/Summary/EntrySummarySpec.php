@@ -4,21 +4,29 @@ namespace spec\HistoricalMeteorological\Calculator\Summary;
 
 use HistoricalMeteorological\Calculator\Summary\EntrySummary;
 use HistoricalMeteorological\Entity\Entry;
+use HistoricalMeteorological\Entity\Location;
 use PhpSpec\Exception\Example\SkippingException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use PHPUnit\Framework\Assert;
+use spec\HistoricalMeteorological\Entity\LocationSpec;
 
 class EntrySummarySpec extends ObjectBehavior
 {
-    function it_can_add_a_single_entry_and_return_identical_totals(Entry $entry)
-    {
-        throw new SkippingException('Annotation errors');
+    /** @var Location */
+    private $location;
 
-        $entry->getTemperatureMaximum()->willReturn(1.1);
-        $entry->getTemperatureMinimum()->willReturn(2.2);
-        $entry->getRainVolume()->willReturn(3.3);
-        $entry->getSunDuration()->willReturn(4.4);
+    function it_can_add_a_single_entry_and_return_identical_totals()
+    {
+        $entry = $this->createEntry(
+            1,
+            1993,
+            1,
+            1.1,
+            2.2,
+            3.3,
+            4.4
+        );
 
         $this->addEntry($entry);
 
@@ -30,27 +38,37 @@ class EntrySummarySpec extends ObjectBehavior
         $this->getAverageSunDuration()->shouldReturn(4.4);
     }
 
-    function it_can_calculate_the_average_of_multiple_entries(
-        Entry $entry1,
-        Entry $entry2,
-        Entry $entry3
-    ) {
-        throw new SkippingException('Annotation errors');
+    function it_can_calculate_the_average_of_multiple_entries()
+    {
+        $entry1 = $this->createEntry(
+            1,
+            1993,
+            1,
+            1.1,
+            2.2,
+            3.3,
+            4.4
+        );
 
-        $entry1->getTemperatureMaximum()->willReturn(1.1);
-        $entry1->getTemperatureMinimum()->willReturn(2.2);
-        $entry1->getRainVolume()->willReturn(3.3);
-        $entry1->getSunDuration()->willReturn(4.4);
+        $entry2 = $this->createEntry(
+            1,
+            1993,
+            2,
+            4.4,
+            3.3,
+            2.2,
+            1.1
+        );
 
-        $entry2->getTemperatureMaximum()->willReturn(4.4);
-        $entry2->getTemperatureMinimum()->willReturn(3.3);
-        $entry2->getRainVolume()->willReturn(2.2);
-        $entry2->getSunDuration()->willReturn(1.1);
-
-        $entry3->getTemperatureMaximum()->willReturn(1.2);
-        $entry3->getTemperatureMinimum()->willReturn(2.3);
-        $entry3->getRainVolume()->willReturn(3.4);
-        $entry3->getSunDuration()->willReturn(4.1);
+        $entry3 = $this->createEntry(
+            1,
+            1993,
+            3,
+            1.2,
+            2.3,
+            3.4,
+            4.1
+        );
 
         $this->addEntry($entry1);
         $this->addEntry($entry2);
@@ -62,5 +80,41 @@ class EntrySummarySpec extends ObjectBehavior
         $this->getAverageTemperatureMinimum()->shouldReturn(7.8 / 3);
         $this->getAverageRainVolume()->shouldReturn(8.9 / 3);
         $this->getAverageSunDuration()->shouldReturn(9.6 / 3);
+    }
+
+    /**
+     * @param int $id
+     * @param int $year
+     * @param int $month
+     * @param float $temperatureMaximum
+     * @param float $temperatureMinimum
+     * @param float $rainVolume
+     * @param float $sunDuration
+     * @return Entry
+     */
+    private function createEntry(
+        int $id,
+        int $year,
+        int $month,
+        float $temperatureMaximum,
+        float $temperatureMinimum,
+        float $rainVolume,
+        float $sunDuration
+    ) {
+        if (!$this->location) {
+            $this->location = LocationSpec::createLocation();
+        }
+
+        $entry = new Entry();
+        return $entry->hydrate(
+            $id,
+            $this->location,
+            $year,
+            $month,
+            $temperatureMaximum,
+            $temperatureMinimum,
+            $rainVolume,
+            $sunDuration
+        );
     }
 }

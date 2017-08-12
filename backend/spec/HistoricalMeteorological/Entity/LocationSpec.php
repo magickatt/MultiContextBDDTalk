@@ -9,10 +9,8 @@ use Prophecy\Argument;
 
 class LocationSpec extends ObjectBehavior
 {
-    function it_should_be_able_to_save_and_retrieve_information(Location $location)
+    function it_should_be_able_to_save_and_retrieve_information()
     {
-        throw new SkippingException('Annotation errors');
-
         $this->setId('northampton')->shouldReturn($this);
         $this->getId()->shouldReturn('northampton');
 
@@ -27,5 +25,20 @@ class LocationSpec extends ObjectBehavior
 
         $this->setDistanceAboveMeanSeaLevel(130)->shouldReturn($this);
         $this->getDistanceAboveMeanSeaLevel()->shouldReturn(130);
+    }
+
+    /**
+     * @return Location
+     */
+    public static function createLocation()
+    {
+        $location = new Location();
+        return $location->hydrate(
+            'northampton',
+            'Northampton',
+            52.2405,
+            -0.9027,
+            130
+        );
     }
 }
