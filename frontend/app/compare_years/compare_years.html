@@ -28,10 +28,10 @@
 </form>
 <div class="content" ng-hide="aggregates.length == 0">
     <ul>
-        <li>Average Rain Volume: <span id="average-rain-volume">{{aggregates.averages.rain_volume}}</span>mm</li>
-        <li>Average Sun Duration: <span id="average-sun-duration">{{aggregates.averages.sun_duration}}</span> hours</li>
-        <li>Average Temperature Minimum: <span id="average-temperature-minimum">{{aggregates.averages.temperature_minimum}}</span>&#8451;</li>
-        <li>Average Temperature Maximum: <span id="average-temperature-maximum">{{aggregates.averages.temperature_maximum}}</span>&#8451;</li>
+        <li>Average Rain Volume: <span id="average-rain-volume">{{aggregates.averages.rain_volume | number: 1}}</span> mm</li>
+        <li>Average Sun Duration: <span id="average-sun-duration">{{aggregates.averages.sun_duration | number: 1}}</span> hours</li>
+        <li>Average Temperature Minimum: <span id="average-temperature-minimum">{{aggregates.averages.temperature_minimum | number: 1}}</span>&#8451;</li>
+        <li>Average Temperature Maximum: <span id="average-temperature-maximum">{{aggregates.averages.temperature_maximum | number: 1}}</span>&#8451;</li>
     </ul>
 </div>
 <table class="table" ng-table="entryTable" ng-hide="entries.length == 0">

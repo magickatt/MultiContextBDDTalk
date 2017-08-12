@@ -7,9 +7,9 @@ use HistoricalMeteorological\Entity\Entry;
 class EntrySummary
 {
     const TEMPERATURE_MAXIMUM = 'temperature_maximum';
-    const TEMPERATURE_MINIMUM = 'temperature_maximum';
-    const RAIN_VOLUME = 'temperature_maximum';
-    const SUN_DURATION = 'temperature_maximum';
+    const TEMPERATURE_MINIMUM = 'temperature_minimum';
+    const RAIN_VOLUME = 'rain_volume';
+    const SUN_DURATION = 'sun_duration';
 
     /** @var float */
     private $totalTemperatureMaximum = 0;
