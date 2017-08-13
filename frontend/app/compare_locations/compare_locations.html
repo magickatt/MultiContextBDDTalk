@@ -34,7 +34,7 @@
     <li>Temperature Maximum difference: <span id="difference-average-temperature-maximum">{{comparisons.differences.temperature_maximum | number: 1}}</span>&#8451;</li>
   </ul>
 </div>
-<table class="table" ng-table="entryTable" ng-hide="entries.length == 0">
+<table id="entry-table" class="table" ng-table="entryTable" ng-hide="entries.length == 0">
   <thead>
   <tr>
     <th>Location</th>

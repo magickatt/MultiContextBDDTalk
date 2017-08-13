@@ -34,7 +34,7 @@
         <li>Average Temperature Maximum: <span id="average-temperature-maximum">{{aggregates.averages.temperature_maximum | number: 1}}</span>&#8451;</li>
     </ul>
 </div>
-<table class="table" ng-table="entryTable" ng-hide="entries.length == 0">
+<table id="entry-table" class="table" ng-table="entryTable" ng-hide="entries.length == 0">
     <thead>
     <tr>
         <th>Year</th>

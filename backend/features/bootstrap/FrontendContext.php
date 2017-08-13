@@ -1,5 +1,6 @@
 <?php
 
+use Behat\Mink\Element\DocumentElement;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\MinkExtension\Context\MinkContext;
@@ -38,17 +39,24 @@ class FrontendContext extends MinkContext
      */
     public function iWantToCompareDataForBetweenAnd($locationName, $yearFrom, $yearTo)
     {
-        // Select the location and the date range from the dropdowns on the page
+        $page = $this->getPage();
+
+        // Select the location from the dropdowns on the page
         $this->selectOption('location-dropdown', $locationName);
+
+        // Wait for the year dropdowns to be populated based on the location selected
+        $page->waitFor(2, function() use ($yearFrom, $page) {
+            return $page->find('css', '#year-from-dropdown > option:nth-child(2)');
+        });
+
+        // Select the date range from the dropdowns on the page
         $this->selectOption('year-from-dropdown', $yearFrom);
-
-        // Need to replace this with a spin
-        sleep(1);
-
         $this->selectOption('year-to-dropdown', $yearTo);
 
-        // Need to replace this with a spin
-        sleep(1);
+        // Wait for the entry table to be populated with results
+        $page->waitFor(4, function() use ($page) {
+            return $page->find('css', '#entry-table > tbody > tr:nth-child(1)');
+        });
     }
 
     /**
@@ -100,13 +108,24 @@ class FrontendContext extends MinkContext
      */
     public function iWantToCompareDataForAndFor($locationName1, $locationName2, $year)
     {
-        // Select the location and the date range from the dropdowns on the page
+        $page = $this->getPage();
+
+        // Select the pair of locations from the dropdowns on the page
         $this->selectOption('location-dropdown', $locationName1);
         $this->selectOption('additional-location-dropdown', $locationName2);
+
+        // Wait for the year dropdown to be populated based on the locations selected
+        $page->waitFor(2, function() use ($year, $page) {
+            return $page->find('css', '#year-dropdown > option:nth-child(2)');
+        });
+
+        // Select the year from the dropdown on the page
         $this->selectOption('year-dropdown', $year);
 
-        // Need to replace this with a spin
-        sleep(1);
+        // Wait for the entry table to be populated with results
+        $page->waitFor(4, function() use ($page) {
+            return $page->find('css', '#entry-table > tbody > tr:nth-child(1)');
+        });
     }
 
     /**
@@ -151,6 +170,15 @@ class FrontendContext extends MinkContext
     }
 
     /**
+     * Get the element representing the whole HTML page
+     * @return DocumentElement
+     */
+    private function getPage()
+    {
+        return $this->getMink()->getSession()->getPage();
+    }
+
+    /**
      * Translate the name of a page to a URI
      * @param string $name
      * @return string
@@ -170,6 +198,7 @@ class FrontendContext extends MinkContext
      */
     private function roundNumberForFrontend($number)
     {
+        // Because number_format will return -0.0 if it rounds to 0 and the number was originally negative
         if (round($number, self::FRONTEND_DECIMAL_PLACES) == 0) {
             return number_format(0, self::FRONTEND_DECIMAL_PLACES);
         }
