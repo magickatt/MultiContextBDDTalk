@@ -16,20 +16,254 @@
           "locations"
         ],
         "summary": "Lists available locations",
-        "description": "Multiple status values can be provided with comma separated strings",
         "operationId": "listLocations",
         "produces": [
           "application/json"
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "string"
-            }
+            "description": "Retrieve list of locations"
+          }
+        }
+      }
+    },
+    "/locations/{location}": {
+      "get": {
+        "tags": [
+          "locations"
+        ],
+        "summary": "Show information about a single location",
+        "operationId": "getLocationInformation",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "ID of the location",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieve location information"
+          }
+        }
+      }
+    },
+    "/locations/{location}/years-available": {
+      "get": {
+        "tags": [
+          "locations"
+        ],
+        "summary": "Show years that entries are available for this location",
+        "operationId": "getLocationYearsAvailable",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "ID of the location",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieve array of years that entries are available for this location"
+          }
+        }
+      }
+    },
+    "/locations/{location1}/{location2}/years-both-available": {
+      "get": {
+        "tags": [
+          "locations"
+        ],
+        "summary": "Show years that entries are available for a pair of locations",
+        "operationId": "getLocationYearsBothAvailable",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "location1",
+            "in": "path",
+            "description": "ID of the first location",
+            "required": true,
+            "type": "string"
           },
-          "400": {
-            "description": "Invalid status value"
+          {
+            "name": "location2",
+            "in": "path",
+            "description": "ID of the second location",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieve array of years that entries are available for both locations"
+          }
+        }
+      }
+    },
+    "/entries/": {
+      "get": {
+        "tags": [
+          "entries"
+        ],
+        "summary": "Lists available entries",
+        "operationId": "listEntries",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieve list of entries"
+          }
+        }
+      }
+    },
+    "/entries/{location}": {
+      "get": {
+        "tags": [
+          "entries"
+        ],
+        "summary": "List entries from a single location",
+        "operationId": "listEntriesByYear",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "ID of the location",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieve list of entries"
+          }
+        }
+      }
+    },
+    "/entries/{location}/{year}": {
+      "get": {
+        "tags": [
+          "entries"
+        ],
+        "summary": "List entries from a location for a year",
+        "operationId": "listEntriesByYear",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "ID of the location",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "year",
+            "in": "path",
+            "description": "Year to retrieve entries for",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieve list of entries"
+          }
+        }
+      }
+    },
+    "/entries/{location}/{yearFrom}/{yearTo}": {
+      "get": {
+        "tags": [
+          "entries"
+        ],
+        "summary": "List entries from a location between a date range",
+        "operationId": "listEntriesByYear",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "ID of the location",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "yearFrom",
+            "in": "path",
+            "description": "Year to retrieve entries from",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "yearTo",
+            "in": "path",
+            "description": "Year to retrieve entries to",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieve list of entries"
+          }
+        }
+      }
+    },
+    "/entries/{location1}/{location2}/{year}/compare": {
+      "get": {
+        "tags": [
+          "entries"
+        ],
+        "summary": "List entries from a pair of locations for a year",
+        "operationId": "listEntriesByYear",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "location1",
+            "in": "path",
+            "description": "ID of the first location",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "location2",
+            "in": "path",
+            "description": "ID of the second location",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "year",
+            "in": "path",
+            "description": "Year to retrieve entries for",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieve list of entries"
           }
         }
       }
