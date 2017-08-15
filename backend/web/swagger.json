@@ -1,0 +1,42 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Demo for talk on how Behaviour Driven Development (BDD) can be used to test multiple contexts for modern websites separated into single page applications and REST APIs.\n\nThis demonstrates how you can spin up a front-end and back-end container (which in reality would live in separate repositories) and run behavioural tests against one and both independently",
+    "version": "1.0.0",
+    "title": "Multi-content BDD Talk"
+  },
+  "host": "backend:9999",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/locations/": {
+      "get": {
+        "tags": [
+          "locations"
+        ],
+        "summary": "Lists available locations",
+        "description": "Multiple status values can be provided with comma separated strings",
+        "operationId": "listLocations",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about this talk on GitHub",
+    "url": "https://github.com/magickatt/MultiContextBDDTalk"
+  }
+}

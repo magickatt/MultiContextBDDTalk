@@ -16,7 +16,7 @@ class DefaultControllerProvider extends AbstractControllerProvider
     protected function registerControllerRoutes(Application $application, ControllerCollection $collection):ControllerCollection
     {
         $collection->get('/', function (Application $application) {
-            return 'Hello World';
+            return file_get_contents(__DIR__.'/../../../../view/swagger-ui.html');
         });
 
         return $collection;
