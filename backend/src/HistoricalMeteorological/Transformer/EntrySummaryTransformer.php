@@ -16,7 +16,7 @@ class EntrySummaryTransformer
             ],
             'averages' => [
                 'temperature_maximum' => round($summary->getAverageTemperatureMaximum(), 2),
-                'temperature_minimum' => round($summary->getAverageTemperatureMinimum(), 2),
+                //'temperature_minimum' => round($summary->getAverageTemperatureMinimum(), 2),
                 'rain_volume' => round($summary->getAverageRainVolume(), 2),
                 'sun_duration' => round($summary->getAverageSunDuration(), 2)
             ]
